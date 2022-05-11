@@ -31,7 +31,7 @@ class LeadController extends Controller
         $leads = Lead::with('status')->with('project')->with('Campagines')->orderBy('id','desc')->get();
         $status = Status::get();
         $projects = Projects::get();
-        return view('admin.Pages.test', compact('leads','status','projects'));
+        return view('Admin.Pages.test', compact('leads','status','projects'));
     }
 
     /**
@@ -170,7 +170,7 @@ class LeadController extends Controller
     }
         $status = Status::get();
         $projects = Projects::get();
-        return  view('admin.Pages.test', compact('leads','status','projects'));
+        return  view('Admin.Pages.test', compact('leads','status','projects'));
     }
 
     public function trash(){

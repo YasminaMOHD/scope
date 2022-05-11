@@ -22,7 +22,7 @@ class StatusController extends Controller
     public function index()
     {
         $statuses = Status::all();
-        return view('admin.Pages.status', compact('statuses'));
+        return view('Admin.Pages.status', compact('statuses'));
     }
 
     /**
