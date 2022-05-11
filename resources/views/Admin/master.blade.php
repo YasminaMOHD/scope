@@ -10,17 +10,17 @@
     <meta name="author" content="">
 
     <title>@yield('title')</title>
-    <link rel="icon" href="{{secure_asset('image/logo.png')}}">
-    <link href="{{secure_asset('css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{{asset('image/logo.png')}}">
+    <link href="{{asset('css/all.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="{{secure_asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <link href="{{asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{secure_asset('css/sb-admin.css')}}" rel="stylesheet">
-    <script src="{{secure_asset('js/jquery-3.5.1.min.js')}}"></script>
+    <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
+    <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
     <link rel="stylesheet" type="text/css"
-     href="{{secure_asset('toastr/toastr.min.css')}}">
+     href="{{asset('toastr/toastr.min.css')}}">
 
 
     <!-- Custom fonts for this template-->
@@ -30,7 +30,7 @@
 
 <body id="page-top">
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-        <a class="navbar-brand mr-1" href="dashboard.php"><img src="{{asset('image/logo.png')}}" width="80"></a>
+        <a class="navbar-brand mr-1" href="{{route('admin.index')}}"><img src="{{asset('image/logo.png')}}" width="80"></a>
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
@@ -162,17 +162,17 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{secure_asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
 
-    <script src="{{secure_asset('js/datatables/jquery.dataTables.js')}}"></script>
-    <script src="{{secure_asset('js/datatables/dataTables.bootstrap4.js')}}"></script>
+    <script src="{{asset('js/datatables/jquery.dataTables.js')}}"></script>
+    <script src="{{asset('js/datatables/dataTables.bootstrap4.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{secure_asset('js/sb-admin.min.js')}}"></script>
+    <script src="{{asset('js/sb-admin.min.js')}}"></script>
 
     @yield('script')
-    <script src="{{secure_asset('toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('toastr/toastr.min.js')}}"></script>
 
 </body>
 
