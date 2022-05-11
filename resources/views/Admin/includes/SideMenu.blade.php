@@ -57,11 +57,13 @@
             <span> Landing</span></a>
     </li>
     @endcan
+    @can('view-project')
     <li class="nav-item {{request()->routeIs('admin.campaigen.index') ? 'active' : ''}}">
         <a class="nav-link" href="{{route('admin.campaigen.index')}}">
             <i class="fas fa-bullhorn"></i>
             <span> Campaigns</span></a>
     </li>
+    @endcan
     @can('view-user')
     <li class="nav-item {{request()->routeIs('admin.secuirety') ? 'active' : ''}}">
         <a class="nav-link" href="{{route('admin.secuirety')}}">
