@@ -162,17 +162,17 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{secure_asset('js/bootstrap.min.js')}}"></script>
 
 
-    <script src="{{asset('js/datatables/jquery.dataTables.js')}}"></script>
-    <script src="{{asset('js/datatables/dataTables.bootstrap4.js')}}"></script>
+    <script src="{{secure_asset('js/datatables/jquery.dataTables.js')}}"></script>
+    <script src="{{secure_asset('js/datatables/dataTables.bootstrap4.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{asset('js/sb-admin.min.js')}}"></script>
+    <script src="{{secure_asset('js/sb-admin.min.js')}}"></script>
 
     @yield('script')
-    <script src="{{asset('toastr/toastr.min.js')}}"></script>
+    <script src="{{secure_asset('toastr/toastr.min.js')}}"></script>
 
 </body>
 
