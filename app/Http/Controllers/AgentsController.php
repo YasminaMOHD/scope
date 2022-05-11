@@ -69,9 +69,9 @@ class AgentsController extends Controller
             'user_id' => $user->id,
             'role_id' => Role::where('name','user')->first()->id,
         ]);
-            return redirect()->route('Admin.agent.index')->with('success','Agent created successfully');
+            return redirect()->route('admin.agent.index')->with('success','Agent created successfully');
         }else{
-            return redirect()->route('Admin.agent.index')->withErrors($validate);;
+            return redirect()->route('admin.agent.index')->withErrors($validate);;
         }
     }
 
