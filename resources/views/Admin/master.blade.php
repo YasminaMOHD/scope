@@ -10,17 +10,17 @@
     <meta name="author" content="">
 
     <title>@yield('title')</title>
-    <link rel="icon" href="{{asset('image/logo.png')}}">
-    <link href="{{asset('css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{{secure_asset('image/logo.png')}}">
+    <link href="{{secure_asset('css/all.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="{{asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <link href="{{secure_asset('css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
-    <script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
+    <link href="{{secure_asset('css/sb-admin.css')}}" rel="stylesheet">
+    <script src="{{secure_asset('js/jquery-3.5.1.min.js')}}"></script>
     <link rel="stylesheet" type="text/css"
-     href="{{asset('toastr/toastr.min.css')}}">
+     href="{{secure_asset('toastr/toastr.min.css')}}">
 
 
     <!-- Custom fonts for this template-->
