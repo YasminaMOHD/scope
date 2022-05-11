@@ -59,7 +59,7 @@
                             <select id="project" class="form-control d-inline" name="project" required>
                                 <option disabled selected>Select Project</option>
                                 @foreach ($projects as $project )
-                                <option value="{!!$project ? $project->id : ''!!}" name="project">{!!$project ?? $project->name!!}</option>
+                                <option value="{!!$project ? $project->id : ''!!}" name="project">{!!$project ? $project->name : "" !!}</option>
                                 @endforeach
                             </select>
                         </div>
