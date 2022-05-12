@@ -660,6 +660,9 @@
                                                 <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Project: activate to sort column ascending">Project</th>
+                                                <th style="width: fit-content" class="sorting" tabindex="0"
+                                                    aria-controls="dataTable" rowspan="1" colspan="1"
+                                                    aria-label="Project: activate to sort column ascending">Agent</th>
                                                 <th style="width: 25px;" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Status: activate to sort column ascending">Status</th>
@@ -690,6 +693,7 @@
                                             <td>{!!$lead->created_at!!}</td>
                                             <td><a href="tel:{!!$lead->phone!!}">{!!$lead->phone!!}</a></td>
                                             <td>{!!$lead->project->name ?? '' !!}</td>
+                                            <td>{!!$lead->agent->fullName ?? '' !!}</td>
                                             <td>
                                                 <div class="btn @if($lead->status->name == 'No Answer') btn-primary @elseif($lead->status->name == 'Potential') btn-light
                                                     @elseif($lead->status->name == 'Follow Up') btn-warning @elseif($lead->status->name == 'Undefined') btn-secondary
