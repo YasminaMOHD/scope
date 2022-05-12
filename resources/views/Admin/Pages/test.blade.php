@@ -693,7 +693,8 @@
                                             <td>{!!$lead->created_at!!}</td>
                                             <td><a href="tel:{!!$lead->phone!!}">{!!$lead->phone!!}</a></td>
                                             <td>{!!$lead->project->name ?? '' !!}</td>
-                                            <td>{!!$lead->agent->fullName ?? '' !!}</td>
+                                            @php $agen = App\Models\Agents_lead::whereIn($lead->id,'leads')->first()->agent_id;  @endphp
+                                            <td>{!!$agen !!}</td>
                                             <td>
                                                 <div class="btn @if($lead->status->name == 'No Answer') btn-primary @elseif($lead->status->name == 'Potential') btn-light
                                                     @elseif($lead->status->name == 'Follow Up') btn-warning @elseif($lead->status->name == 'Undefined') btn-secondary

@@ -52,11 +52,6 @@ class Agent_LeadController extends Controller
                    'agent_id' => $request->agent_id,
                    'leads' => $request->lead
                ]);
-               foreach($request->lead as $lead){
-                $lead_update = Lead::where('id',$lead)->update([
-                     'agent_id' => $request->agent_id
-                   ]);
-           }
                if($store){
                 return redirect()->route('admin.agent_lead.index')->with('success','Successfully Assign Leads To agent');
                }else{
@@ -107,11 +102,6 @@ class Agent_LeadController extends Controller
                    'agent_id' => $request->agent_id,
                    'leads' => $request->lead
                ]);
-               foreach($request->lead as $lead){
-                     $lead_update = Lead::where('id',$lead)->update([
-                          'agent_id' => $request->agent_id
-                        ]);
-                }
                if($store){
                 return redirect()->route('admin.agent_lead.index')->with('success','Successfully update Assign Leads To agent');
                }else{
