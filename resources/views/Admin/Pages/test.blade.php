@@ -111,10 +111,23 @@
                                         {!! $s->icon !!}
                                     </div>
                                     @php
+                                     if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
                                         $count = App\Models\Lead::with('status')
                                             ->where('status_id', $s->id)
                                             ->count();
+                                                    }else{
+                                        $l=App\Models\Agents_lead::where('agent_id',App\Models\Agents::where('user_id',Auth::user()->id)->first()->id)->first();
+                                        if($l != null){
+                                           $le=$l->leads;
+                                       }else{
+                                           $le=[];
+                                       }
+                                        $count = App\Models\Lead::with('status')
+                                            ->where('status_id', $s->id)->whereIn('id',$le)
+                                            ->count();
                                         $countjs [] = $count;
+                                    }
+
                                     @endphp
                                     <div class="mr-1">{!! $count !!} {!! $s->name !!}</div>
                                 </div>

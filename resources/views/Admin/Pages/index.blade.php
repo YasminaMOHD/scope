@@ -5,28 +5,42 @@
         <div class="col-md-12 col-12">
             <div class="row">
                 @foreach ($status as $s)
-                    <div class="col-xl-2 col-md-3 col-6 col-sm-6 mb-3 p-1" style="min-height: 125px;">
-                        <div class="card text-white o-hidden h-100" style="background-color: {!! $s->color !!}">
-                            <div class="card-body">
-                                <div class="card-body-icon">
-                                    {!! $s->icon !!}
-                                </div>
-                                @php
-                                    $count = App\Models\Lead::with('status')
-                                        ->where('status_id', $s->id)
-                                        ->count();
-                                @endphp
-                                <div class="mr-1">{!! $count !!} {!! $s->name !!}</div>
+                <div class="col-xl-2 col-md-3 col-6 col-sm-6 mb-3 p-1" style="min-height: 125px;">
+                    <div class="card text-white o-hidden h-100" style="background-color: {!! $s->color !!}">
+                        <div class="card-body">
+                            <div class="card-body-icon">
+                                {!! $s->icon !!}
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="{{route('lead.search',['status',$s->id])}}">
-                                <span class="float-left">View List</span>
-                                <span class="float-right">
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            </a>
+                            @php
+                             if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
+                                $count = App\Models\Lead::with('status')
+                                    ->where('status_id', $s->id)
+                                    ->count();
+                                            }else{
+                                $l=App\Models\Agents_lead::where('agent_id',App\Models\Agents::where('user_id',Auth::user()->id)->first()->id)->first();
+                                if($l != null){
+                                   $le=$l->leads;
+                               }else{
+                                   $le=[];
+                               }
+                                $count = App\Models\Lead::with('status')
+                                    ->where('status_id', $s->id)->whereIn('id',$le)
+                                    ->count();
+                                $countjs [] = $count;
+                            }
+
+                            @endphp
+                            <div class="mr-1">{!! $count !!} {!! $s->name !!}</div>
                         </div>
+                        <a class="card-footer text-white clearfix small z-1" href="{{route('lead.search',['status',$s->id])}}">
+                            <span class="float-left">View List</span>
+                            <span class="float-right">
+                                <i class="fas fa-angle-right"></i>
+                            </span>
+                        </a>
                     </div>
-                @endforeach
+                </div>
+            @endforeach
             </div>
             <br><hr><br>
             <button class="btn btn-primary"> <a href="{{route('lead.index')}}" style="color:#fff">Go To Lead Page</a></button>
