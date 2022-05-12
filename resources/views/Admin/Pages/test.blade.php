@@ -697,6 +697,8 @@
                                             foreach ($agen as $a) {
                                                 if(in_array($lead->id,$a->leads)){
                                                     $agent_name=App\Models\Agents::where('id',$a->agent_id)->first()->fullName;
+                                                }else{
+                                                    $agent_name='';
                                                 }
                                             }
                                               @endphp
