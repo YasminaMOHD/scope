@@ -693,8 +693,14 @@
                                             <td>{!!$lead->created_at!!}</td>
                                             <td><a href="tel:{!!$lead->phone!!}">{!!$lead->phone!!}</a></td>
                                             <td>{!!$lead->project->name ?? '' !!}</td>
-                                            @php $agen = App\Models\Agents_lead::whereJsonContains('leads',$lead->id)->first();  @endphp
-                                            <td>{!!$agen ? $agent->agent_id : '' !!}</td>
+                                            @php $agen = App\Models\Agents_lead::all();
+                                            foreach ($agen as $a) {
+                                                if(in_array($lead->id,$a->leads)){
+                                                    $agent_name=App\Models\Agents::where('id',$a->agent_id)->first()->fullName;
+                                                }
+                                            }
+                                              @endphp
+                                            <td>{!!$agent_name!!}</td>
                                             <td>
                                                 <div class="btn @if($lead->status->name == 'No Answer') btn-primary @elseif($lead->status->name == 'Potential') btn-light
                                                     @elseif($lead->status->name == 'Follow Up') btn-warning @elseif($lead->status->name == 'Undefined') btn-secondary
