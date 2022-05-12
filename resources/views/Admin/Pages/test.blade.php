@@ -706,7 +706,7 @@
                                             <td>
                                                 <div class="btn @if($lead->status->name == 'No Answer') btn-primary @elseif($lead->status->name == 'Potential') btn-light
                                                     @elseif($lead->status->name == 'Follow Up') btn-warning @elseif($lead->status->name == 'Undefined') btn-secondary
-                                                    @elseif($lead->status->name == 'Unsellable Customer') btn-danger
+                                                    @elseif($lead->status->name == 'Unsellable customer') btn-danger
                                                     @elseif($lead->status->name == 'Deal')btn-info @else btn-success @endif
                                                      btn-circle btn-circle-sm m-1"
                                                     style="width: 120px;">{!!$lead->status->name ?? '' !!}</div>
