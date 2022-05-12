@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Status;
 use App\Models\Projects;
 use App\Models\Campagines;
+use App\Models\Agents_lead;
 use App\Models\Description;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,4 +29,5 @@ class Lead extends Model
     public function desc(){
         return $this->hasMany(Description::Class);
     }
+
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Projects;
+use App\Models\Agents_lead;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,4 +20,8 @@ class Agents extends Model
     public function project(){
         return $this->hasMany(Projects::class);
     }
+    public function agent_lead(){
+        return $this->hasMany(Agents_lead::class);
+    }
+
 }

@@ -42,6 +42,13 @@
             <span> Agents</span></a>
     </li>
     @endcan
+    @can('view-agent')
+    <li class="nav-item {{request()->routeIs('admin.agent_lead.index') ? 'active' : ''}}">
+        <a class="nav-link" href="{{route('admin.agent_lead.index')}}">
+            <i class="fas fa-arrow-right"></i>
+            <span> Assign Leads Agent</span></a>
+    </li>
+    @endcan
     @can('create-lead')
     {{-- @can('can:viwe-excel,App\Models\Excel::class') --}}
     <li class="nav-item {{request()->routeIs('admin.excel') ? 'active' : ''}}">

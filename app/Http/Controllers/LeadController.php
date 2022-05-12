@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Excel;
 use Carbon\Carbon;
 use App\Models\Lead;
+use App\Models\Agents;
 use App\Models\Status;
 use App\Models\Projects;
 use App\Models\Campagines;
 use App\Imports\LeadImport;
+use App\Models\Agents_lead;
 use App\Models\Description;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -28,7 +30,18 @@ class LeadController extends Controller
     public function index()
     {
         $this->authorize('view-lead', Lead::class);
-        $leads = Lead::with('status')->with('project')->with('Campagines')->orderBy('id','desc')->get();
+
+        if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
+            $leads = Lead::with('status')->with('project')->with('Campagines')->orderBy('id','desc')->get();
+        }else{
+        $l=Agents_lead::where('agent_id',Agents::where('user_id',Auth::user()->id)->first()->id)->first();
+        if($l != null){
+            $le=$l->leads;
+        }else{
+            $le=[];
+        }
+        $leads = Lead::with('status')->with('project')->with('Campagines')->whereIn('id',$le)->orderBy('id','desc')->get();
+        }
         $status = Status::get();
         $projects = Projects::get();
         return view('Admin.Pages.test', compact('leads','status','projects'));
@@ -158,7 +171,17 @@ class LeadController extends Controller
     public function search(Request $req ,$Status=null,$lead=null)
     {
         if($Status == 'status'){
-            $leads = Lead::with('status')->with('project')->with('desc')->orderBy('id','desc')->where('status_id',$lead)->get();
+            if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
+                $leads = Lead::with('status')->with('project')->with('Campagines')->where('status_id',$lead)->orderBy('id','desc')->get();
+            }else{
+             $l=Agents_lead::where('agent_id',Agents::where('user_id',Auth::user()->id)->first()->id)->first();
+             if($l != null){
+                $le=$l->leads;
+            }else{
+                $le=[];
+            }
+            $leads = Lead::with('status')->with('project')->with('Campagines')->whereIn('id',$le)->where('status_id',$lead)->orderBy('id','desc')->get();
+            }
         }else if($Status == 'project'){
             $leads = Lead::with('status')->with('project')->where('project_id',$lead)->get();
         }else{

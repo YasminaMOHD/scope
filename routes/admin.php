@@ -9,6 +9,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\Agent_LeadController;
 use App\Http\Controllers\CampaginesController;
 
 /*
@@ -30,6 +31,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Route::get('/project', [MenuController::class,'project'])->name('project');
     Route::get('/secuirety', [MenuController::class,'secuirety'])->name('secuirety');
     Route::resource('/agent', AgentsController::class);
+    Route::resource('/agent_lead', Agent_LeadController::class);
     Route::resource('/campaigen', CampaginesController::class);
     Route::resource('/project', ProjectsController::class);
     Route::resource('/landing', LandingController::class);
