@@ -4,17 +4,18 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Models\Agents;
+use App\Models\Description;
 use App\Models\Roles_Users;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -48,6 +49,9 @@ class User extends Authenticatable
     ];
     public function agent(){
       return  $this->hasOne(Agents::class);
+    }
+    public function discription(){
+      return  $this->hasMany(Description::class);
     }
     public function roles(){
         return $this->belongsToMany(Roles_Users::class);

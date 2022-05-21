@@ -2,6 +2,11 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Jobs\ChangeStatus;
+use App\Models\Description;
+use App\Notifications\SendRemainder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +20,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->call(function(){
+            $time =  Carbon::now()->format('Y-m-d H:i');
+            $desc = Description::with('lead')->with('user')->where('reminder_at',$time)->get();
+                foreach ($desc as $chunk){
+                    $user = User::where('id',$chunk['user_id'])->first();
+                    $user->notify(new SendRemainder($chunk));
+            }
+           })->everyMinute();
+
     }
 
     /**

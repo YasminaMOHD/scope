@@ -38,7 +38,7 @@
                     <div class="form-group row">
                         <label class="col-md-3">Select Project</label>
                         <div class="col-md-8">
-                            <select id="project" class="form-control d-inline" name="project" required>
+                            <select id="project" class="form-control d-inline" name="project" >
                                 <option disabled selected>Select Project</option>
                                 @foreach($projects as $project)
                                     <option value="{{$project->id}}">{{$project->name}}</option>

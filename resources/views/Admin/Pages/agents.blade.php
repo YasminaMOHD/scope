@@ -192,7 +192,7 @@
                                                 @csrf
                                                 @method("DELETE")
                                                 <button style="margin-bottom: 5px;" type="submit" name="delete" value="{{$agent->id}}"
-                                                    class="btn btn-danger btn-sm" onclick="confirm('Are you want to delete this agent ?')"><i
+                                                    class="btn btn-danger btn-sm" onclick="return confirm('Are you want to delete this agent ?')"><i
                                                         class="fas fa-fw fa-user-minus"></i></button>
                                             </form>
                                         </div>
@@ -231,10 +231,10 @@
                                                             placeholder="Contact Person Full Name" value="{!!$agent->fullName!!}" required>
                                                         <input style="margin-bottom: 15px;" type="text" id="username-{!!$agent->id!!}"
                                                             class="form-control" name="username"
-                                                            placeholder="Username" value="{!!$agent->user->name!!}" required>
+                                                            placeholder="Username" value="{!!$agent->user ? $agent->user->name : ''!!}" required>
                                                         <input style="margin-bottom: 15px;" type="email" id="email-{!!$agent->id!!}"
                                                             class="form-control" name="email"
-                                                            placeholder="Email Address" value="{!!$agent->user->email!!}"
+                                                            placeholder="Email Address" value="{!!$agent->user ? $agent->user->email : ''!!}"
                                                             required>
                                                         <input style="margin-bottom: 15px;" type="password"
                                                             id="password-{!!$agent->id!!}" class="form-control" name="password"
@@ -275,4 +275,5 @@
   <script src="{{asset('js/jquery.easing.min.js')}}"></script>
     <!-- Demo scripts for this page-->
     <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+
 @endsection

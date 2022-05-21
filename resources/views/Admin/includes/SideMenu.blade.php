@@ -28,6 +28,11 @@
             <span> Leads</span></a>
     </li>
     @endcan
+    <li class="nav-item {{request()->routeIs('inventory.index') ? 'active' : ''}}">
+        <a class="nav-link" href="{{route('inventory.index')}}">
+            <i class="fas fa-people-arrows"></i>
+            <span> Inventory Managment</span></a>
+    </li>
     @can('view-project')
     <li class="nav-item {{request()->routeIs('admin.project.index') ? 'active' : ''}}">
         <a class="nav-link" href="{{route('admin.project.index')}}">

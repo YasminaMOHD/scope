@@ -137,7 +137,7 @@
                                                 @csrf
                                                 @method("DELETE")
                                                 <button style="margin-bottom: 5px;" type="submit" name="delete" value="{{$ag->id}}"
-                                                    class="btn btn-danger btn-sm" onclick="confirm('Are you want to delete this agent leads ?')"><i
+                                                    class="btn btn-danger btn-sm" onclick="return confirm('Are you want to delete this agent leads ?')"><i
                                                         class="fas fa-fw fa-user-minus"></i></button>
                                             </form>
                                         </div>

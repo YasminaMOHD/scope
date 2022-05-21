@@ -30,6 +30,18 @@
                 });
             </script>
         @endif
+        @if (Session::has('error'))
+            <script>
+                $(function() { //ready
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true,
+                        "showDuration": "1000",
+                    }
+                    toastr.error("{!! Session::get('error') !!}");
+                });
+            </script>
+        @endif
 
 
         @foreach ($errors->get('name') as $message)
@@ -194,7 +206,7 @@
                         <form action='{{route('superAdmin.status.destroy',[$status])}}' method="post">
                             @csrf
                             @method('DELETE')
-                            <button style="margin-bottom: 5px;" onclick="confirm('Are you ready want to delete this status ?')" name="delete" value="1"
+                            <button style="margin-bottom: 5px;" onclick="return confirm('Are you ready want to delete this status ?')" name="delete" value="1"
                                 class="btn btn-danger btn-sm"><i class="fas fa-fw fa-user-minus"></i></button>
 
                         </form>

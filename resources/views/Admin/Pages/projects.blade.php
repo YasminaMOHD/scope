@@ -126,7 +126,7 @@
                                     <form action='{{route('admin.project.destroy',[$project])}}' method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button style="margin-bottom: 5px;" onclick="confirm('Are you ready want to delete this project ?')" name="delete" value="1"
+                                        <button style="margin-bottom: 5px;" onclick="return confirm('Are you ready want to delete this project ?')" name="delete" value="1"
                                             class="btn btn-danger btn-sm"><i class="fas fa-fw fa-user-minus"></i></button>
 
                                     </form>

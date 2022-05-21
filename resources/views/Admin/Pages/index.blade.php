@@ -43,7 +43,18 @@
             @endforeach
             </div>
             <br><hr><br>
-            <button class="btn btn-primary"> <a href="{{route('lead.index')}}" style="color:#fff">Go To Lead Page</a></button>
+           @can('create-project')
+            <form action="{{route('filter')}}" method="get">
+                <select name="agent" id="agent" class="selectpicker form-control mb-3" style="width:27%">
+                    <option selected disabled>Select Agent</option>
+                    @foreach ($agents as $a)
+                    <option value="{{$a->id}}">{{$a->fullName}}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-primary" name="lead" value="lead">Go To Lead Page</button>
+                <button class="btn btn-warning" name="inventory" value="inventory">Go To inventory Page</button>
+            </form>
+        @endcan
 
     </div>
     </div>

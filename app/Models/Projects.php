@@ -7,12 +7,12 @@ use App\Models\Agents;
 use App\Models\Landing;
 use App\Models\Campagines;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Projects extends Model
 {
-    use HasFactory;
-    protected $softDelete = true;
+    use HasFactory,SoftDeletes;
     protected $guarded=[];
 
     public function agent(){

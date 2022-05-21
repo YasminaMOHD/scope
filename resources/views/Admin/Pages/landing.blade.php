@@ -132,7 +132,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button style="width: 36px;" type="submit"
-                                                        class="btn btn-danger btn-sm" onclick="confirm('Are you want to delete Project URL Page ?')"  ><i
+                                                        class="btn btn-danger btn-sm" onclick="return confirm('Are you want to delete Project URL Page ?')"  ><i
                                                             class="fas fa-fw fa-user-minus" ></i></button>
                                                     </form>
                                                     </li>

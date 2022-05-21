@@ -8,8 +8,13 @@ use App\Models\Agents;
 use App\Models\Roles_Users;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Notifications\AgentUser;
+use App\Notifications\CreateAgent;
+use App\Notifications\DeleteAgent;
+use App\Notifications\UpdateAgent;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\UpdateAgentUser;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateAgentsRequest;
 
@@ -69,6 +74,11 @@ class AgentsController extends Controller
             'user_id' => $user->id,
             'role_id' => Role::where('name','user')->first()->id,
         ]);
+        $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                     foreach ($users as $user1) {
+                      $user1->notify(new CreateAgent($agent));
+                  }
+              $user->notify(new AgentUser($agent));
             return redirect()->route('admin.agent.index')->with('success','Agent created successfully');
         }else{
             return redirect()->route('admin.agent.index')->withErrors($validate);;
@@ -129,6 +139,12 @@ class AgentsController extends Controller
                 'phone' => $request->phone,
                 'companyName' => 'ScopeRealestate',
            ]);
+           $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                     foreach ($users as $user1) {
+                      $user1->notify(new UpdateAgent(Agents::where('id',$agents)->first()));
+                  }
+                  $user = User::where('id',$request['update'])->first();
+                  $user->notify(new UpdateAgentUser(Agents::where('id',$agents)->first()));
             return redirect()->route('admin.agent.index')->with('success','Agent updated successfully');
         }else{
             return redirect()->route('admin.agent.index')->withErrors($validate);;
@@ -143,7 +159,7 @@ class AgentsController extends Controller
      */
     public function destroy($agents)
     {
-        $this->authorize('force-delete-agent', Agents::class);
+        $this->authorize('delete-agent', Agents::class);
         $agent = Agents::findOrFail($agents);
         $user = User::findOrFail($agent->user_id);
         $role = Roles_Users::where('user_id',$user->id)->first();
@@ -151,6 +167,10 @@ class AgentsController extends Controller
         $del_role = $role->delete();
         $del_user = $user->forceDelete();
         if($del && $del_role && $del_user){
+            $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                     foreach ($users as $user) {
+                      $user->notify(new DeleteAgent($agent));
+                  }
             return redirect()->route('admin.agent.index')->with('success','Agent deleted successfully');
     }else{
            return redirect()->route('admin.agent.index')->with('error','Error in deleting process ');

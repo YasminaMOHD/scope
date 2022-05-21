@@ -8,12 +8,13 @@ use App\Models\Campagines;
 use App\Models\Agents_lead;
 use App\Models\Description;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lead extends Model
 {
-    use HasFactory;
-    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use HasFactory,SoftDeletes ;
     protected $guarded=[];
 
 

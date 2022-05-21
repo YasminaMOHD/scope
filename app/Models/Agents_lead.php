@@ -5,14 +5,14 @@ namespace App\Models;
 use App\Models\Lead;
 use App\Models\Agents;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Agents_lead extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $guarded = [];
     protected $table = 'agents_lead';
-    protected $softDelete = true;
     protected $casts = [
         'leads' => 'array',
     ];

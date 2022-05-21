@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Agents;
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use App\Notifications\CreateProject;
+use App\Notifications\DeleteProject;
+use App\Notifications\UpdateProject;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreProjectsRequest;
 use App\Http\Requests\UpdateProjectsRequest;
@@ -53,6 +57,10 @@ class ProjectsController extends Controller
                 'developerName' => $request->projectred,
             ]);
             if($project){
+                $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                     foreach ($users as $user) {
+                      $user->notify(new CreateProject($project));
+                  }
                 return redirect()->route('admin.project.index')->with('success','Project created successfully');
             }
         }else{
@@ -103,6 +111,11 @@ class ProjectsController extends Controller
                 'agent_id' => $request->projectseller,
             ]);
             if($project){
+                $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                $p=Projects::where('id',$projects)->first();
+                     foreach ($users as $user) {
+                      $user->notify(new UpdateProject($p));
+                  }
                 return redirect()->route('admin.project.index')->with('success','Project updated successfully');
             }
         }else{
@@ -118,9 +131,13 @@ class ProjectsController extends Controller
      */
     public function destroy($projects)
     {
-        $this->authorize('force-delete-project', Projects::class);
+        $this->authorize('delete-project', Projects::class);
         $project = Projects::findOrFail($projects);
         $project->delete();
+        $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                     foreach ($users as $user) {
+                      $user->notify(new DeleteProject($project));
+                  }
         return redirect()->route('admin.project.index')->with('success','Project deleted successfully');
     }
 }

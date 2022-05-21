@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
+use App\Models\User;
 use App\Models\Agents;
 use App\Models\Agents_lead;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Notifications\AssignLead;
+use App\Notifications\AgentLeadAssign;
 use Illuminate\Support\Facades\Validator;
 
 class Agent_LeadController extends Controller
@@ -53,6 +56,16 @@ class Agent_LeadController extends Controller
                    'leads' => $request->lead
                ]);
                if($store){
+                $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                $agent = Agents::where('id',$request->agent_id)->first();
+                foreach($request['lead'] as $lead){
+                    foreach ($users as $user) {
+                        $l=Lead::where('id',$lead)->first();
+                      $user->notify(new AssignLead($l,$agent));
+                    }
+                    $userAssign = User::where('id',$agent->user_id)->first();
+                    $userAssign->notify(new AgentLeadAssign($l));
+                   }
                 return redirect()->route('admin.agent_lead.index')->with('success','Successfully Assign Leads To agent');
                }else{
                 return redirect()->route('admin.agent_lead.index')->with('error','Something wrong');
@@ -103,6 +116,16 @@ class Agent_LeadController extends Controller
                    'leads' => $request->lead
                ]);
                if($store){
+                $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                $agent = Agents::where('id',$request->agent_id)->first();
+                foreach($request['lead'] as $lead){
+                    foreach ($users as $user) {
+                        $l=Lead::where('id',$lead)->first();
+                      $user->notify(new AssignLead($l,$agent));
+                    }
+                    $userAssign = User::where('id',$agent->user_id)->first();
+                    $userAssign->notify(new AgentLeadAssign($l));
+                   }
                 return redirect()->route('admin.agent_lead.index')->with('success','Successfully update Assign Leads To agent');
                }else{
                 return redirect()->route('admin.agent_lead.index')->with('error','Something wrong');

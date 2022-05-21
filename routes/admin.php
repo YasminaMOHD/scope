@@ -9,6 +9,7 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\Agent_LeadController;
 use App\Http\Controllers\CampaginesController;
 
@@ -43,13 +44,20 @@ Route::prefix('super-admin')->name('superAdmin.')->middleware('auth')->group(fun
 Route::resource('/lead', LeadController::class);
 
 Route::resource('/lead', LeadController::class);
+Route::resource('/inventory', InventoryController::class);
 Route::get('/Lead_Trash',[LeadController::class , 'trash'])->name('lead.trash');
 Route::get('/Lead_restote/{id}',[LeadController::class , 'restore'])->name('lead.restore');
 Route::post('/lead_desc/{id}',[LeadController::class , 'leadDesc'])->name('lead.desc');
+Route::get('/lead_desc/update',[LeadController::class , 'leadDescUpdate'])->name('lead.desc.update');
+Route::get('/lead_desc/delete',[LeadController::class , 'leadDescdel'])->name('lead.desc.delete');
+Route::get('/lead_desc/reminder',[LeadController::class , 'reminder'])->name('lead.desc.reminder');
 Route::post('/lead_import',[LeadController::class , 'import'])->name('lead.import');
+Route::get('/send-reminder',[LeadController::class , 'sendReminder'])->name('lead.sendReminder');
 Route::get('/search/{status?}/{lead?}', [LeadController::class, 'search'])->name('lead.search');
+Route::post('/assign/{lead}', [LeadController::class, 'assign'])->name('lead.assign');
 Route::post('/admin/confirm_change',[SecurityController::class , 'change'])->name('updatepassword');
 Route::post('/admin/change_password',[SecurityController::class , 'update'])->name('change_password');
+Route::get('/admin/filter-data',[MenuController::class , 'filter'])->name('filter');
 Route::fallback(function(){
     return view('error.404');
 });

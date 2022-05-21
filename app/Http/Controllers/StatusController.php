@@ -99,6 +99,9 @@ class StatusController extends Controller
             'color' => 'required',
         ]);
         if($validate){
+            if((Status::where('id',$status)->first()->name) == 'Undefined'){
+                return redirect()->route('superAdmin.status.index')->with('error', 'Status name can not be Undefined');
+            }else{
             $status = Status::where('id',$status)->update([
                 'name' => $request->name,
                 'color' => $request->color,
@@ -107,6 +110,7 @@ class StatusController extends Controller
             if($status){
             return redirect()->route('superAdmin.status.index')->with('success', 'Status updated successfully');
             }
+        }
         }else{
             return redirect()->route('superAdmin.status.index')->withErrors($validate);
         }
@@ -121,10 +125,14 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         $status = Status::findOrFail($status->id);
+        if($status->name == 'Undefined'){
+            return redirect()->route('superAdmin.status.index')->with('error', 'Status Undefind can not be deleted');
+        }else{
         $del = $status->delete();
         if($del){
             return redirect()->route('superAdmin.status.index')->with('success', 'Status deleted successfully');
         }
+    }
 
     }
 }
