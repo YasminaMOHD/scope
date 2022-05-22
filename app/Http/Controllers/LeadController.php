@@ -403,7 +403,9 @@ class LeadController extends Controller
                     'leads'=>[$lead],
                 ]);
                 if($add){
+                    $agent = Agents::with('user')->where('id',$reques->agent_id)->first();
                     $users = User::whereIn('user_type',['super-admin','admin'])->get();
+                    $lead=Lead::where('id',$lead)->first();
                     foreach ($users as $user) {
                       $user->notify(new AssignLead($lead,$agent));
                     }
