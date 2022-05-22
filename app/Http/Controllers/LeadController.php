@@ -351,13 +351,13 @@ class LeadController extends Controller
            if($reques->agent_id != null){
             $agent=Agents_lead::where('agent_id',$reques->agent_id)->first();
             if($agent != null){
-                $alraedy = DB::table('Agents_lead')->where('agent_id',$reques->agent_id)->whereJsonContains('leads',$lead)->first();
+                $alraedy = Agents_lead::where('agent_id',$reques->agent_id)->whereJsonContains('leads',$lead)->first();
                 if($alraedy != null){
                     return redirect()->route('lead.index')->with('error', 'Agent Already Assigned');
                 }else{
-                $check=DB::table('Agents_lead')->whereJsonContains('leads',$lead)->first();
+                $check=Agents_lead::whereJsonContains('leads',$lead)->first();
                 if($check != null){
-                $a=json_decode($check->leads);
+                $a=$check->leads;
                 if (($key = array_search($lead, $a)) !== false) {
                     unset($a[$key]); // remove item at index 0
                     $a2 = array_values($a); // 'reindex' array
@@ -387,9 +387,9 @@ class LeadController extends Controller
                   }
                 }
             }else{
-                $check=DB::table('Agents_lead')->whereJsonContains('leads',$lead)->first();
+                $check=Agents_lead::whereJsonContains('leads',$lead)->first();
                 if($check != null){
-                $a=json_decode($check->leads);
+                $a=$check->leads;
                 if (($key = array_search($lead, $a)) !== false) {
                     unset($a[$key]); // remove item at index 0
                     $a2 = array_values($a); // 'reindex' array

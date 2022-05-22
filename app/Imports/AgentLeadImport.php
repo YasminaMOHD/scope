@@ -27,9 +27,9 @@ class AgentLeadImport implements ToModel, WithHeadingRow
         $lead = Lead::where('name',$row['full_name'])->where('phone',$row['phone_number'])->
         where('email',$row['email'])->first();
         if($agent != null && $lead != null){
-            $check=DB::table('Agents_lead')->whereJsonContains('leads',$lead->id)->first();
+            $check=Agents_lead::whereJsonContains('leads',$lead->id)->first();
             if($check != null){
-            $a=json_decode($check->leads);
+            $a=$check->leads;
             if (($key = array_search($lead->id, $a)) !== false) {
                 unset($a[$key]); // remove item at index 0
                 $a2 = array_values($a); // 'reindex' array
@@ -46,9 +46,9 @@ class AgentLeadImport implements ToModel, WithHeadingRow
             ]);
 
         }else{
-            $check=DB::table('Agents_lead')->whereJsonContains('leads',$lead->id)->first();
+            $check=Agents_lead::whereJsonContains('leads',$lead->id)->first();
             if($check != null){
-            $a=json_decode($check->leads);
+            $a=$check->leads;
             if (($key = array_search($lead->id, $a)) !== false) {
                 unset($a[$key]); // remove item at index 0
                 $a2 = array_values($a); // 'reindex' array
