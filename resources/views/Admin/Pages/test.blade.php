@@ -1317,30 +1317,34 @@
                     'id': id,
                 },
                 success: function(data) {
-                    for (var count in data) {
-                        info += '<div class="mb-2 rounded bg-secondary">' +
-                            '<div class="edit-desc mb-3" style="display: none">' +
-                            '<div>' +
-                            '<textarea  class="w-100 desc" name="desc">' + data[count].text +
-                            '</textarea>' +
-                            '<button  value="' + data[count].id +
-                            '" class="updatedesc btn btn-hover btn-primary" >edit</button>' +
-                            '</div>' + '</div>' + '<div class="p-1 mb-4 bg-light rounded textedit">' +
-                            data[count].text +
-                            '</div>' + '<div class="row">' + '<div class="col-sm-6">' +
-                            '<div class="by-class">';
+                        desc.html("");
+                        for (var count in data) {
+                            //    console.log(data[count]);
+                            info += '<div class="p-2 mb-2 rounded bg-secondary">' +
+                                '<div class="edit-desc mb-3" style="display: none">' +
+                                '<div>' +
+                                '<textarea  class="w-100 desc" name="desc">' + data[count]
+                                .text + '</textarea>' +
+                                '<button  value="' + data[count].id +
+                                '" class="updatedesc btn btn-hover btn-primary" >edit</button>' +
+                                '</div>' + '</div>' +
+                                '<div class="p-1 mb-4 bg-light rounded textedit">' + data[count]
+                                .text +
+                                '</div>' + '<div class="row">' + '<div class="col-sm-6">' +
+                                '<div class="by-class">';
 
-                        info += ' Edited by:  ' + data[count].user.name + ' </div>' +
-                            '<div class="date-class">' + data[count].created_at + '</div>' +
-                            '</div>' +
-                            '<div class="col-sm-6">' +
-                            '<div class="icons" style="display: flex;  flex-direction: row-reverse;">' +
-                            '<button class="editbtndesc ml-1" style="border-radius: 50%"><i class="fas fa-pencil-alt prefix"></i></button>' +
-                            '{{-- <form action=""> --}}' +
-                            '<button class="deldesc ml-1" style="border-radius: 50%" value="' +
-                            data[count].id + '"><i class="fas fa-fw fa-trash"></i></button>' +
-                            '{{-- </form> --}}' +
-                            '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>'+
+                            info += ' Edited by:  ' + data[count].user.name + ' </div>' +
+                                '<div class="date-class">' + data[count].created_at + '</div>' +
+                                '</div>' +
+                                '<div class="col-sm-6">' +
+                                '<div class="icons" style="display: flex;  flex-direction: row-reverse;">' +
+                                '<button class="editbtndesc ml-1" style="border-radius: 50%"><i class="fas fa-pencil-alt prefix"></i></button>' +
+                                '{{-- <form action=""> --}}' +
+                                '<button class="deldesc ml-1" style="border-radius: 50%"  value="' +
+                                data[count].id +
+                                '"><i class="fas fa-fw fa-trash"></i></button>' +
+                                '{{-- </form> --}}' +
+                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>'+
                             '<div class="change w-75" style="display: none">'+
                                 ' <span style="color: #fff">Last Reminder : '+
                                     ' <br>'+data[count].reminder_at+'</span> '+
@@ -1350,14 +1354,14 @@
                                     '<button class="btn btn-primary w-75 mt-1 saveReminder"'+
                                     ' value="'+data[count].id+'">save time</button>'+
                              '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
 
-                    }
-                    desc.html(info);
-                },
+                        }
+                        desc.html(info);
+                    },
                 error: function(response) {
                     alert('error');
                 }
@@ -1387,10 +1391,10 @@
                         'desc': desc
                     },
                     success: function(data) {
-                        console.log(data)
+                        descblock.html("");
                         for (var count in data) {
                             //    console.log(data[count]);
-                            descblock.html("");
+
                             info += '<div class="p-2 mb-2 rounded bg-secondary">' +
                                 '<div class="edit-desc mb-3" style="display: none">' +
                                 '<div>' +
@@ -1415,7 +1419,7 @@
                                 data[count].id +
                                 '"><i class="fas fa-fw fa-trash"></i></button>' +
                                 '{{-- </form> --}}' +
-                                '<button class="select_reminder" style="border-radius: 50%"><iclass="fas fa-time"></i></button>'+
+                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>'+
                             '<div class="change w-75" style="display: none">'+
                                 ' <span style="color: #fff">Last Reminder : '+
                                     ' <br>'+data[count].reminder_at+'</span> '+
@@ -1455,9 +1459,8 @@
                         'desc': desc
                     },
                     success: function(data) {
-                        console.log(data)
+                        descblock.html("");
                         for (var count in data) {
-                            descblock.html("");
                             info += '<div class="mb-2 rounded bg-secondary">' +
                                 '<div class="edit-desc mb-3" style="display: none">' +
                                 '<div>' +
