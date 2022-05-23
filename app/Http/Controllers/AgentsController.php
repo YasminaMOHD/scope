@@ -56,7 +56,7 @@ class AgentsController extends Controller
             'fullname'=>'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => 'required',
+            'phone' => 'required|max:13',
         ])->validate();
         if($validate){
              $user = User::create([
@@ -125,7 +125,7 @@ class AgentsController extends Controller
                 Rule::unique('users')->ignore($request['update']),
             ],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => 'required',
+            'phone' => 'required|max:13',
         ])->validate();
 
         if($validate){

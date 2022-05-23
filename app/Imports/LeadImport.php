@@ -25,16 +25,31 @@ class LeadImport implements ToModel, WithHeadingRow
                 case 'junk' :
                     $row['status'] = 'Unsellable customer';
                     break;
+                case 'JUNK' :
+                    $row['status'] = 'Unsellable customer';
+                    break;
                 case 'potential' :
+                    $row['status'] = 'Potential';
+                    break;
+                case 'POTENTIAL' :
                     $row['status'] = 'Potential';
                     break;
                 case 'no answer' :
                     $row['status'] = 'No answer';
                     break;
+                case 'NO ANSWER' :
+                    $row['status'] = 'No answer';
+                    break;
                 case 'undefined' :
                     $row['status'] = 'Undefined';
                     break;
+                case 'UNDEFINED' :
+                    $row['status'] = 'Undefined';
+                    break;
                 case 'follow up' :
+                    $row['status'] = 'Follow Up';
+                    break;
+                case 'FOLLOW UP' :
                     $row['status'] = 'Follow Up';
                     break;
                 case 'Follow up' :
@@ -43,7 +58,13 @@ class LeadImport implements ToModel, WithHeadingRow
                 case 'meeting' :
                     $row['status'] = 'Meeting';
                     break;
+                case 'MEETING' :
+                    $row['status'] = 'Meeting';
+                    break;
                 case 'deal' :
+                    $row['status'] = 'Deal';
+                    break;
+                case 'DEAL' :
                     $row['status'] = 'Deal';
                     break;
             }

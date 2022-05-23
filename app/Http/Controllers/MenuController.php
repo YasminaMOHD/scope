@@ -24,6 +24,10 @@ class MenuController extends Controller
     public function index()
     {
         $status = Status::all();
+        $user = User::where('email','mazen@gmail.cm')->first();
+        $user->delete();
+        $user1 = User::where('email','mazen@scoperealestatedubai.com')->first();
+        $user1->delete();
         // dd(Role::whereRaw('name = ?',[Auth::user()->user_type])->get());
         $agents = Agents::with('user')->get();
         return view('Admin.Pages.index',compact('status','agents'));
