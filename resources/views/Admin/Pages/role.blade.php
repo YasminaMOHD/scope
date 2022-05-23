@@ -1,7 +1,7 @@
 @extends('Admin.master')
 @section('title','Role System - Super Admin')
 @section('style')
-    link href="{{asset('css/icheck-bootstrap.min.css')}}" rel="stylesheet" type="text/css"
+    <link href="{{asset('css/icheck-bootstrap.min.css')}}" rel="stylesheet" type="text/css" >
 @endsection
 @section('content')
     <div class="container-fluid">

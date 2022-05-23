@@ -44,7 +44,11 @@ class MenuController extends Controller
             return view('Admin.Pages.test', compact('leads','status','projects','agents','campagines'));
          }else{
              $agen = Agents::where('id',$request['agent'])->first();
+             if($agen != null){
             $inventories = Inventory::with('agent')->where('user_id',$agen->user_id)->get();
+             }else{
+                $inventories = [];
+             }
             return view('Admin.Pages.Inventory',compact('inventories'));
          }
     }
