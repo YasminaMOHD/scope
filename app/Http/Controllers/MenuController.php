@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Agents;
 use App\Models\Status;
 use App\Models\Projects;
