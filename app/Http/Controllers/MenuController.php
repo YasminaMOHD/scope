@@ -26,8 +26,6 @@ class MenuController extends Controller
     {
         $status = Status::all();
 
-        $user1 = User::where('email','mazen@scoperealestatedubai.com')->where('deleted_at','!=',null)->first();
-        $user1->forceDelete();
         // dd(Role::whereRaw('name = ?',[Auth::user()->user_type])->get());
         $agents = Agents::with('user')->get();
         return view('Admin.Pages.index',compact('status','agents'));
