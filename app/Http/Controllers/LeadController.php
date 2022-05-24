@@ -352,7 +352,7 @@ class LeadController extends Controller
             }
             }
         public function import(Request $request){
-            $this->authorize('create-agent', Lead::class);
+            $this->authorize('create-agent', Agents::class);
             if($request->hasFile('uploadfile')){
                $project = Excel::import(new ProjectImport, $request->file('uploadfile'));
                $campagine = Excel::import(new CampaginesImport, $request->file('uploadfile'));
