@@ -631,7 +631,7 @@
                                             </select>
                                             <input style="margin-bottom: 15px;" type="text" id="other"
                                                 class="otherproject form-control" name="leadproject"
-                                                placeholder="Other Project" disabled>
+                                                placeholder="Other Project" disabled required>
                                         </div>
                                         <div class="campagin-sec">
                                             <select class="campagineState form-control" style="margin-bottom: 15px;"

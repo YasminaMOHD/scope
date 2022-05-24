@@ -194,13 +194,44 @@ class LeadController extends Controller
         ])->validate();
 
         if($validate){
-             $lead1 = Lead::where('id',$lead)->update([
-                'name' => $request->leadname,
-                'email' => $request->email,
-                'phone' => $request->leadtel,
-                'address' => $request->leadaddress,
-                'project_id' => $request->leadproject,
-             ]);
+            if($request->leadproject != null){
+             if(is_numeric($request->leadproject)){
+                $p = Projects::where('id',$request->leadproject)->first();
+                if($p != null){
+                    $lead1 = Lead::where('id',$lead)->update([
+                        'name' => $request->leadname,
+                        'email' => $request->email,
+                        'phone' => $request->leadtel,
+                        'address' => $request->leadaddress,
+                        'project_id' => $request->leadproject,
+                     ]);
+                }
+             }else{
+                    $newP=Projects::create([
+                        'name'=>$request->leadproject,
+                        'developerName'=>$request->leadproject
+                    ]);
+                    $lead1 = Lead::where('id',$lead)->update([
+                        'name' => $request->leadname,
+                        'email' => $request->email,
+                        'phone' => $request->leadtel,
+                        'address' => $request->leadaddress,
+                        'project_id' => $newP->id,
+                     ]);
+                }
+            }
+            if($request->leadcampagin != null && $request->leadsource != null){
+               $c= Campagines::where('name',$request->leadcampagin)->where('source',$request->leadsource)->first();
+               if($c == null){
+                 $newC=  Campagines::create([
+                       'name'=>$request->leadcampagin,
+                       'source'=>$request->leadsource
+                   ]);
+                   $lead1 = Lead::where('id',$lead)->update([
+                    'campagine_id'=>$newC->id
+                 ]);
+                }
+            }
                 if($lead1){
                     $users = User::whereIn('user_type',['super-admin','admin'])->get();
                     foreach ($users as $user) {
