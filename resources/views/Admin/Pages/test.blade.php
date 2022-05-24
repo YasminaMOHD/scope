@@ -302,7 +302,7 @@
                                             name="leadcampagin">
                                             <option disabled="" value="" selected="" name="leadcampagin">Select Campagine
                                             </option>
-                                            <option value="other" class="disothr">Other Campagine</option>
+                                            <option value="other" class="disothr">Other Campaign</option>
                                             @foreach ($campagines as $campagine)
                                                 <option value="{!! $campagine->id !!}" style="display: flex">
                                                     <span>{!! $campagine->name !!}</span> : <span></span>

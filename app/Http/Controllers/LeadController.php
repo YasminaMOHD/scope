@@ -104,12 +104,14 @@ class LeadController extends Controller
            ]);
 
            if($request->leadproject != null){
+               if(is_numeric($request->leadproject)){
                $p = Projects::where('id',$request->leadproject)->first();
                if($p != null){
                    $lead->update([
                        'project_id'=>$request->leadproject
                    ]);
-               }else{
+               }
+            }else{
                    $newP=Projects::create([
                        'name'=>$request->leadproject,
                        'developerName'=>$request->leadproject
@@ -319,7 +321,7 @@ class LeadController extends Controller
             }
             }
         public function import(Request $request){
-            $this->authorize('create-lead', Lead::class);
+            $this->authorize('create-agent', Lead::class);
             if($request->hasFile('uploadfile')){
                $project = Excel::import(new ProjectImport, $request->file('uploadfile'));
                $campagine = Excel::import(new CampaginesImport, $request->file('uploadfile'));
