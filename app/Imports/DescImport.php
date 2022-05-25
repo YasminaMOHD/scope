@@ -21,7 +21,7 @@ class DescImport implements ToModel, WithHeadingRow
     {
         if($row['desc'] != null || $row['desc'] != ''){
         $lead=Lead::where('name',$row['full_name'])->where('phone',$row['phone_number'])->
-        where('email',$row['email'])->first();
+         where('email',$row['email'])->first();
         $contact = Description::firstOrCreate(
             [
                 'user_id' => Auth::user()->id,
