@@ -73,7 +73,7 @@ class LeadImport implements ToModel, WithHeadingRow
             $status = Status::where('name','Undefined')->first();
         }
         $c_id = Campagines::where('name',$row['campaign_name'])->where('source',$row['platform'])->first();
-        $proj_id = Projects::where('name',$row['project_name'])->first()->id;
+        $proj_id = Projects::where('name',$row['project_name'])->first();
         $contact = Lead::firstOrCreate(
             [
                 'name' => $row['full_name'],
@@ -81,8 +81,8 @@ class LeadImport implements ToModel, WithHeadingRow
             'phone' => $row['phone_number'],
             'address' => $row['address'],
             'status_id' => $status->id,
-            'campagine_id' => $c_id->id,
-            'project_id'=>$proj_id,
+            'campagine_id' => $c_id ? $c_id->id : null,
+            'project_id'=>$proj_id ? $proj_id->id : null,
             ]
         );
 
@@ -93,8 +93,8 @@ class LeadImport implements ToModel, WithHeadingRow
             'phone' => $row['phone_number'],
             'address' => $row['address'],
             'status_id' => $status->id,
-            'campagine_id' => $c_id->id,
-            'project_id'=>$proj_id,
+            'campagine_id' => $c_id ? $c_id->id : null,
+            'project_id'=>$proj_id ? $proj_id->id : null,
             ]);
         }
     }
