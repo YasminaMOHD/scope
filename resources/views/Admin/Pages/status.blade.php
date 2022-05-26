@@ -326,6 +326,13 @@
                                                   @endif>
                                                     <label for="icon7"><i class="fas fa-hands-helping"></i></label>
                                                 </div>
+                                                  <div class="col-sm-2 col-1">
+                                                    <input type="radio" id="icon8" name="icon" value='<i class="fas fa-random"></i>'
+                                                    @if ($status->icon == '<i class="fas fa-random"></i>')
+                                                    checked
+                                                  @endif>
+                                                    <label for="icon8"><i class="fas fa-random"></i></label>
+                                                </div>
                                                 </div>
                                         </div>
                                     </div>
