@@ -160,6 +160,10 @@
                                         <input type="radio" id="icon7" name="icon" value='<i class="fas fa-hands-helping"></i>'>
                                         <label for="icon7"><i class="fas fa-hands-helping"></i></label>
                                     </div>
+                                      <div class="col-sm-2 col-1">
+                                        <input type="radio" id="icon8" name="icon" value='<i class="fas fa-random"></i>'>
+                                        <label for="icon8"><i class="fas fa-random"></i></label>
+                                    </div>
                                     @foreach ($errors->get('icon') as $message)
                                     <span class="error">
                                         {{ $message }}*

@@ -28,6 +28,7 @@ use App\Notifications\UpdateLead;
 use App\Notifications\CreateExcel;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\ChangeStatus;
+use App\Notifications\DeleteSetLead;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Notifications\AgentLeadAssign;
@@ -50,7 +51,7 @@ class LeadController extends Controller
     {
         $this->authorize('view-lead', Lead::class);
         if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
-            $leads = Lead::with('status')->with('project')->with('Campagines')->orderBy('id','desc')->get();
+            $leads = Lead::with('status')->with('project')->with('Campagines')->orderBy('created_at','desc')->get();
         }else{
         $l=Agents_lead::where('agent_id',Agents::where('user_id',Auth::user()->id)->first()->id)->first();
         if($l != null){
@@ -58,7 +59,7 @@ class LeadController extends Controller
         }else{
             $le=[];
         }
-        $leads = Lead::with('status')->with('project')->with('Campagines')->whereIn('id',$le)->orderBy('id','desc')->get();
+        $leads = Lead::with('status')->with('project')->with('Campagines')->whereIn('id',$le)->orderBy('created_at','desc')->get();
         }
         $status = Status::get();
         $projects = Projects::get();
@@ -273,7 +274,7 @@ class LeadController extends Controller
     {
         if($Status == 'status'){
             if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
-                $leads = Lead::with('status')->with('project')->with('Campagines')->where('status_id',$lead)->orderBy('id','desc')->get();
+                $leads = Lead::with('status')->with('project')->with('Campagines')->where('status_id',$lead)->orderBy('created_at','desc')->get();
             }else{
              $l=Agents_lead::where('agent_id',Agents::where('user_id',Auth::user()->id)->first()->id)->first();
              if($l != null){
@@ -281,7 +282,7 @@ class LeadController extends Controller
             }else{
                 $le=[];
             }
-            $leads = Lead::with('status')->with('project')->with('Campagines')->whereIn('id',$le)->where('status_id',$lead)->orderBy('id','desc')->get();
+            $leads = Lead::with('status')->with('project')->with('Campagines')->whereIn('id',$le)->where('status_id',$lead)->orderBy('created_at','desc')->get();
             }
         }else if($Status == 'project'){
             $leads = Lead::with('status')->with('project')->where('project_id',$lead)->get();
@@ -487,7 +488,26 @@ class LeadController extends Controller
             return  $desc;
         }
     }
-
+public function destroyAll(Request $request){
+    if($request['deleteLeads'] != null){
+        $request['deleteLeads'] = array_map('intval', explode(',', $request['deleteLeads']));
+    foreach($request['deleteLeads'] as $lead){
+       $lead = Lead::findOrFail($lead);
+       $del = $lead->delete();
+    }
+    if($del){
+        $users = User::whereIn('user_type',['super-admin','admin'])->get();
+        foreach ($users as $user) {
+         $user->notify(new DeleteSetLead());
+     }
+        return redirect()->route('lead.index')->with('success', 'Lead Deleted Successfully');
+       }else{
+        return redirect()->route('lead.index')->with('error', 'Something wrong');
+       }
+}else{
+    return redirect()->route('lead.index')->with('error', 'No Lead Selected');
+}
+}
 public function sendReminder(){
 
     // foreach ($desc as $key) {

@@ -144,90 +144,6 @@
                             </div>
                         </div>
                     @endforeach
-                    <div class="col-xl-2 col-md-3 col-6 col-sm-6 mb-3 p-1">
-                        <canvas id="stats" height="190" style="position: absolute;"></canvas>
-                    </div>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-                    <script>
-                        new Chart(document.getElementById("stats"), {
-                            "type": "bar",
-                            "data": {
-                                "labels": [
-                                    "Deal",
-                                    "Meeting",
-                                    "Potential",
-                                    "Follow Up",
-                                    "No Answer",
-                                    "Undefined",
-                                    "Unsellable customer"
-                                ],
-                                "datasets": [{
-                                    "label": "Leads",
-                                    "data": [
-                                        0.09,
-                                        0.44,
-                                        0.37,
-                                        4.99,
-                                        8.47,
-                                        81.81,
-                                        3.82
-                                    ],
-                                    "backgroundColor": [
-                                        "#17A2B8",
-                                        "#28A745",
-                                        "#343A40",
-                                        "#FFC107",
-                                        "#007BFF",
-                                        "#6C757D",
-                                        "#DC3545"
-                                    ]
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                legend: {
-                                    display: false
-                                },
-                                labels: {
-                                    display: false
-                                },
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            callback: function(value) {
-                                                return value + "%"
-                                            }
-                                        },
-                                        scaleLabel: {
-                                            //display: true,
-                                            //labelString: "Percentage"
-                                        }
-                                    }]
-                                },
-                                tooltips: {
-                                    callbacks: {
-                                        label: function(tooltipItem, data) {
-                                            return Chart.defaults.global.tooltips.callbacks.label(tooltipItem, data) + '%';
-                                        }
-                                    }
-                                }
-                            },
-                            tooltips: {
-                                callbacks: {
-                                    label: function(tooltipItem, data) {
-                                        var dataset = data.datasets[tooltipItem.datasetIndex];
-                                        var meta = dataset._meta[Object.keys(dataset._meta)[0]];
-                                        var currentValue = dataset.data[tooltipItem.index];
-                                        return currentValue + ' %';
-                                    },
-                                    title: function(tooltipItem, data) {
-                                        return data.labels[tooltipItem[0].index];
-                                    }
-                                }
-                            }
-
-                        });
-                    </script>
                 </div>
             </div>
         </div>
@@ -556,15 +472,16 @@
                                             data-live-search="true">
                                             <option  disabled>select Agent</option>
                                             @php
-                                             $agen = App\Models\Agents_lead::all();
+                                             $agen = App\Models\Agents_lead::get();
                                                     foreach ($agen as $a) {
-                                                           if (in_array($lead->id, $a->leads)) {
-                                                               $agent_name = App\Models\Agents::where('id', $a->agent_id)->first()->id;
+                                                           if (in_array(($lead->id), $a->leads)) {
+                                                               $agent_name = App\Models\Agents::where('id', $a->agent_id)->first();
+                                                               $agent_name = $agent_name ? $agent_name->id : '';
                                                                 break;
                                                             } else {
                                                               $agent_name = '';
                                                           }
-                                                     }
+                                                        }
                                              @endphp
                                             @foreach ($agents as $agent)
                                                 <option value="{!! $agent->id !!}"
@@ -802,8 +719,8 @@
                         .dateF {
                             /* position: absolute;
                                     top: 85px; */
-                            align-items: center;
-                            text-align: center;
+                            /* align-items: center;
+                            text-align: center; */
                         }
 
                         .gj-datepicker.gj-datepicker-bootstrap.gj-unselectable.input-group {
@@ -897,9 +814,9 @@
                         }
 
                     </style>
-                    <div class="dateF">
-                        <div class="col-md-12 input-group d-inline date">
-                            <form action="{{ route('lead.search') }}" method="GET">
+                    <div class="dateF row mb-5">
+                        <div class="col-md-8 input-group d-inline date">
+                            <form action="{{ route('lead.search') }}" class="w-100" method="GET">
                                 <div role="wrapper"
                                     class="gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group">
                                     <input type="text" name="from" id="start-date"
@@ -914,6 +831,12 @@
                             </form>
 
                         </div>
+                        <div class="col-md-4 mt-3" >
+                            <form action="{{ route('destroyall') }}" method="GET" style="display: flex">
+                                <input type="text" value="" name="deleteLeads" class="del-all form-control w-50 mr-2"  >
+                                <button class="btn btn-danger">Delete All</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="table-responsive toptab">
                         <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -925,31 +848,38 @@
                                             <tr role="row">
                                                 <th style="width: 25px" class="sorting_desc" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending"
-                                                    aria-label="#: activate to sort column ascending">#</th>
+                                                    aria-label="#: activate to sort column ascending"># <input type="checkbox" name="check[]" class="checkAll"></th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Lead Name: activate to sort column ascending">Lead Name</th>
-                                                <th style="width: fit-content" class="sorting" tabindex="0"
+                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                    aria-controls="dataTable" rowspan="1" colspan="1"
+                                                    aria-label="Phone: activate to sort column ascending">Phone</th>
+                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                    aria-controls="dataTable" rowspan="1" colspan="1"
+                                                    aria-label="Date: activate to sort column ascending">Date</th>
+                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                    aria-controls="dataTable" rowspan="1" colspan="1"
+                                                    aria-label="Phone: activate to sort column ascending">Email</th>
+
+                                                    <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Source: activate to sort column ascending">Source</th>
+                                                @can('view-agent')
                                                 <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Campaign: activate to sort column ascending">Campaign</th>
-                                                <th style="width: fit-content" class="sorting" tabindex="0"
-                                                    aria-controls="dataTable" rowspan="1" colspan="1"
-                                                    aria-label="Date: activate to sort column ascending">Date</th>
-                                                <th style="width: fit-content" class="sorting" tabindex="0"
-                                                    aria-controls="dataTable" rowspan="1" colspan="1"
-                                                    aria-label="Phone: activate to sort column ascending">Phone</th>
-                                                <th style="width: fit-content" class="sorting" tabindex="0"
-                                                    aria-controls="dataTable" rowspan="1" colspan="1"
-                                                    aria-label="Phone: activate to sort column ascending">Email</th>
+                                                 @endcan
+
+
                                                 <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Project: activate to sort column ascending">Project</th>
+                                                    @can('view-agent')
                                                 <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Project: activate to sort column ascending">Agent</th>
+                                                    @endcan
                                                 <th style="width: 25px;" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Status: activate to sort column ascending">Status</th>
@@ -962,33 +892,31 @@
                                             @foreach ($leads as $lead)
                                                 <tr role="row" class="odd">
                                                     <td class="sorting_1">
-                                                        <input id="checkrow-{!! $lead->id !!}" form="assignform"
+                                                        <input class="checkrow" form="assignform"
                                                             style="margin-right: 2px" type="checkbox" name="selectedLead[]"
                                                             value="{!! $lead->id !!}"> {!! $loop->iteration !!}
-                                                        <script type="text/javascript">
-                                                            $("#checkrow-{!! $lead->id !!}").change(function() {
-                                                                if (this.checked) {
-                                                                    $("#row-{!! $lead->id !!}").addClass("checkedrow");
-                                                                } else {
-                                                                    $("#row-{!! $lead->id !!}").removeClass("checkedrow");
-                                                                }
-                                                            });
-                                                        </script>
                                                     </td>
                                                     <td>{!! $lead->name !!}</td>
-                                                    <td>{!! $lead->Campagines ? $lead->Campagines->source : 'empty' !!}</td>
-                                                    <td>{!! $lead->Campagines ? $lead->Campagines->name : 'empty' !!}</td>
+                                                    <td><a href="tel:{!! $lead->phone !!}">{!! $lead->phone !!}</a></td>
                                                     <td>{!! $lead->created_at !!}</td>
-                                                    <td><a href="tel:{!! $lead->phone !!}">{!! $lead->phone !!}</a>
-                                                    </td>
-                                                    <td><a href="mailto:{!! $lead->email ?? ' ' !!}"
+                                                </td>
+
+                                                        <td><a href="mailto:{!! $lead->email ?? ' ' !!}"
                                                             target="_blank">{!! $lead->email ?? '' !!}</a></td>
+
+                                                    <td>{!! $lead->Campagines ? $lead->Campagines->source : 'empty' !!}</td>
+                                                    @can('view-agent')
+                                                    <td>{!! $lead->Campagines ? $lead->Campagines->name : 'empty' !!}</td>
+                                                    @endcan
+
                                                     <td>{!! $lead->project->name ?? '' !!}</td>
-                                                    @php $agen = App\Models\Agents_lead::all();
+                                                    @can('view-agent')
+                                                    @php $agen = App\Models\Agents_lead::get();
                                                                                                                 $agent_name = '';
                                                                                                                 foreach ($agen as $a) {
                                                                                                                     if (in_array($lead->id, $a->leads)) {
-                                                                                                                        $agent_name = App\Models\Agents::where('id', $a->agent_id)->first()->fullName;
+                                                                                                                        $agent_name = App\Models\Agents::where('id', $a->agent_id)->first();
+                                                                                                                        $agent_name = $agent_name ? $agent_name->fullName : '';
                                                                                                                         break;
                                                                                                                     } else {
                                                                                                                         $agent_name = '';
@@ -996,11 +924,12 @@
                                                                                                                 }
                                                                                                         @endphp
                                                     <td>{!! $agent_name !!}</td>
+                                                    @endcan
                                                     <td>
                                                         <div class="btn @if ($lead->status->name == 'No Answer') btn-primary @elseif($lead->status->name == 'Potential') btn-light
                                                     @elseif($lead->status->name == 'Follow Up') btn-warning @elseif($lead->status->name == 'Undefined') btn-secondary
                                                     @elseif($lead->status->name == 'Unsellable customer') btn-danger
-                                                    @elseif($lead->status->name == 'Deal')btn-info @else btn-success @endif
+                                                    @elseif($lead->status->name == 'Deal') btn-info @elseif($lead->status->name == 'Meeting') btn-success @else btn-dark  @endif
                                                      btn-circle btn-circle-sm m-1"
                                                             style="width: 120px;">@if($lead->status->name == 'Unsellable customer')junk @else{!! $lead->status->name ?? '' !!} @endif</div>
                                                     </td>
@@ -1261,6 +1190,8 @@
 
 
             var table = $('#dataTable').DataTable({
+                "pageLength": 20,
+                 "stateSave": true,
                 lengthChange: false,
                 buttons: ['copy', 'excel', 'csv', 'pdf', 'colvis']
             });
@@ -1513,6 +1444,59 @@
                     }
                 });
             });
+
+
+                                                            $(document).on('change','.checkrow',function(e){
+    e.preventDefault()
+    var checked = $(this).is(':checked');
+    if(checked){
+          $(this).prop('selected',true);
+          $('.del-all').val($('.del-all').val()+$(this).val()+',')
+     }else{
+         var p= $('.del-all').val()
+         var pArray=p.split(',')
+         var r=[];
+        //  console.log(pArray)
+         for(var s in pArray){
+             if(pArray[s] != $(this).val()){
+                  r.push(pArray[s])
+             }
+         }
+        var newValue=r.join(',')
+        $('.del-all').val(newValue)
+     }
+    });
+     $(document).on('change','.checkAll',function(e){
+    e.preventDefault()
+    var checked = $(this).is(':checked');
+    var p= $('.del-all').val()
+         var pArray=p.split(',')
+         var r=[];
+    if(checked){
+        $('.checkrow').each(function(){
+        $(this).prop("checked", true);
+        for(var s in pArray){
+             if(pArray[s] != $(this).val()){
+                r.push($(this).val())
+                break
+             }
+         }
+        })
+         var newValue=r.join(',')
+        $('.del-all').val(newValue)
+     }else{
+        $('.checkrow').each(function(){
+        $(this).prop("checked", false);
+         for(var s in pArray){
+            if(pArray[s] == $(this).val()){
+                r.pop($(this).val())
+                // break
+             }
+         }
+         $('.del-all').val(r)
+    })
+     }
+})
         });
     </script>
 @endsection

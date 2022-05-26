@@ -74,7 +74,7 @@ class LeadImport implements ToModel, WithHeadingRow
         }
         $c_id = Campagines::where('name',$row['campaign_name'])->where('source',$row['platform'])->first();
         $proj_id = Projects::where('name',$row['project_name'])->first();
-        $contact = Lead::firstOrCreate(
+        $contact = Lead::create(
             [
                 'name' => $row['full_name'],
             'email' => $row['email'],
@@ -86,17 +86,17 @@ class LeadImport implements ToModel, WithHeadingRow
             ]
         );
 
-        if (! $contact->wasRecentlyCreated) {
-            $contact->update([
-                'name' => $row['full_name'],
-            'email' => $row['email'],
-            'phone' => $row['phone_number'],
-            'address' => $row['address'],
-            'status_id' => $status->id,
-            'campagine_id' => $c_id ? $c_id->id : null,
-            'project_id'=>$proj_id ? $proj_id->id : null,
-            ]);
-        }
+        // if (! $contact->wasRecentlyCreated) {
+        //     $contact->update([
+        //         'name' => $row['full_name'],
+        //     'email' => $row['email'],
+        //     'phone' => $row['phone_number'],
+        //     'address' => $row['address'],
+        //     'status_id' => $status->id,
+        //     'campagine_id' => $c_id ? $c_id->id : null,
+        //     'project_id'=>$proj_id ? $proj_id->id : null,
+        //     ]);
+        // }
     }
 
 }

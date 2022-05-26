@@ -56,7 +56,7 @@ class AgentsController extends Controller
             'fullname'=>'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => 'required|max:13',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:13',
         ])->validate();
         if($validate){
              $user = User::create([
@@ -64,12 +64,17 @@ class AgentsController extends Controller
                 'email' => $request['email'],
                 'password' => Hash::make($request['password']),
             ]);
+            try {
              $agent = Agents::create([
                 'fullName' => $request->fullname,
                 'phone' => $request->phone,
                 'companyName' => 'ScopeRealestate',
                 'user_id' => $user->id,
            ]);
+        } catch (Throwable $e) {
+            $user->forceDelete();
+            return redirect()->route('admin.agent.index')->with('error','Something wrong , check if data is corrct');
+        }
            Roles_Users::create([
             'user_id' => $user->id,
             'role_id' => Role::where('name','user')->first()->id,

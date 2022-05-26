@@ -61,3 +61,5 @@ Route::get('/admin/filter-data',[MenuController::class , 'filter'])->name('filte
 Route::fallback(function(){
     return view('error.404');
 });
+// Route::get('/lead/destroy-all',[LeadController::class , 'destroyAll'])->name('destroyall');
+
