@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
     {{-- <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
 <link rel="icon" href="img/favicon.png" type="image/x-icon"> --}}
+<style>
+    .dataTables_processing {
+        text-align: center;
+    z-index: 999999999999999999999;
+    width: 20%;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px 0;
+
+}
+</style>
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -169,9 +180,42 @@
                                 class="btn btn-outline-dark btn-sm float-right" href="#" data-toggle="modal"
                                 data-target="#byuser">Select By <i class="fas fa-fw fa-users"></i></button>
                         </div>
+                        <style>
+                            @media (min-width: 1120px) {
+
+                            .counter{
+                            position: absolute; right: 200px; top:-5px; width: 100%;
+                            }
+
+                            }
+                            @media (min-width: 1730px) {
+
+                            .counter{
+                            top: 0px;
+                            }
+
+                            }
+                            </style>
+
+                            <div class="row counter">
+                            <div class="col-sm-4 col-12">
+                             <span style="font-size: 16px; color: black;">Deals Amount: <span style="color: red;">
+                                @php
+                                  $total = App\Models\Lead::sum('amount');
+                                @endphp
+                                {!! $total !!}
+                                </span>
+                             </div>
+
+                            <div class="col-sm-4 col-12">
+                            <span style="font-size: 16px; color: black;">Total Leads: <span style="color: red;">
+                                @php $count = App\Models\Lead::get()->count(); @endphp {!! $count !!}
+                            </span>
+                             </div>
                     </div>
                 </div>
 
+            </div>
             </div>
 
             <!-- Create lead -->
@@ -406,8 +450,8 @@
 
                                     @foreach ($status as $s)
                                         <div class="radio icheck-primary d-inline">
-                                            <input type="radio" onclick="dynInput(this,{!! $lead->id !!})"
-                                                id="primary-{!! $lead->id !!}" name="lead_status"
+                                            <input type="radio"
+                                                id="primary-{!! $lead->id !!}" name="lead_status" @if($s->name == 'Deal') class="deal" @endif
                                                 value="{!! $s->id !!}"
                                                 @if ($lead->status->id == $s->id) checked @endif required="">
                                             <label for="primary-{!! $lead->id !!}">{!! $s->name !!}</label>
@@ -438,11 +482,14 @@
                                         color: #fff;
                                     }
 
+
                                 </style>
 
                                 <div class="modal-footer">
-                                    <div id="amount-23401">
-                                    </div>
+                                    <div id="amount-24147" class="amount-24147" style="display: none">
+                                        <div id="price-24147">Deal Amount: <input type="number" value="{!!$lead->amount!!}" placeholder="Total Amount"
+                                             name="amount" required="">
+                                            <input type="number" min="1" max="100" value="{!!$lead->percent!!}" placeholder="Percentage" name="percent" required="" style="margin-left: 5px; width: 105px;">%</div></div>
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                                     <input class="btn btn-success" type="submit" name="add_desc" value="Confirm">
                                 </div>
@@ -839,11 +886,14 @@
                         </div>
                     </div>
                     <div class="table-responsive toptab">
+
                         <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="row">
                                 <div class="col-sm-12">
+
                                     <table class="table table-bordered dataTable no-footer" id="dataTable" width="100%"
                                         cellspacing="0" role="grid">
+
                                         <thead>
                                             <tr role="row">
                                                 <th style="width: 25px" class="sorting_desc" tabindex="0"
@@ -1000,9 +1050,10 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
+                                        {{-- {{$leads->render()}} --}}
                                     </table>
-                                    <div id="dataTable_processing" class="dataTables_processing card"
-                                        style="display: none;">Currently loading leads</div>
+                                    {{-- <div id="dataTable_processing" class="dataTables_processing card"
+                                        style="display: block;">Currently loading leads</div> --}}
                                 </div>
                             </div>
                         </div>
@@ -1182,6 +1233,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/plug-ins/1.12.1/api/processing().js"></script> --}}
     @endif
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
     <!-- Demo scripts for this page-->
@@ -1190,10 +1242,17 @@
 
 
             var table = $('#dataTable').DataTable({
+                'bPaginate':true,
+                processing: true,
+                      'order': [[ 0, "desc" ]],
                 "pageLength": 20,
                  "stateSave": true,
                 lengthChange: false,
-                buttons: ['copy', 'excel', 'csv', 'pdf', 'colvis']
+                buttons: ['copy', 'excel', 'csv', 'pdf', 'colvis'],
+                // Language: {
+                //         "Processing": "Currently loading leads"
+                //       },
+
             });
 
             table.buttons().container()
@@ -1496,7 +1555,19 @@
          $('.del-all').val(r)
     })
      }
+});
+
+$('input[type=radio]').on('click',function(){
+    var value = $(this).attr('class');
+    if(value == 'deal'){
+        $('.amount-24147').fadeIn();
+    }else{
+        $('.amount-24147').fadeOut();
+    }
+
 })
+
+
         });
     </script>
 @endsection

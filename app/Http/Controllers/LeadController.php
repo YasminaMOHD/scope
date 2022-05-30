@@ -324,6 +324,8 @@ class LeadController extends Controller
             ]);
             $lead = Lead::where('id',$id)->update([
                 'status_id' => $req->lead_status,
+                'amount' => $req->amount ?? 0,
+                'percent' => $req->percent ?? 0,
             ]);
             if($desc && $lead){
 
@@ -339,6 +341,8 @@ class LeadController extends Controller
             }else{
             $lead = Lead::where('id',$id)->update([
                 'status_id' => $req->lead_status,
+                'amount' => $req->amount ?? 0,
+                'percent' => $req->percent ?? 0,
             ]);
             if($lead){
                 $users = User::whereIn('user_type',['super-admin','admin'])->get();
