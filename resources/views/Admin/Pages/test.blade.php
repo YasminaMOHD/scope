@@ -21,6 +21,12 @@
     padding: 20px 0;
 
 }
+@media (max-width: 1122px) {
+    .none-style{
+        display: none
+}
+}
+
 </style>
 @endsection
 @section('content')
@@ -162,14 +168,14 @@
         <div class="card mb-3">
             <div class="card-header mb-3">
                 <div class="row">
-                    <div class="col-md-2 float-left">
+                    <div class="col-lg-2 float-left">
                         <i class="fas fa-fw fa-users"></i>
                         Leads List
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-lg-2">
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-6 float-right">
+                    <div class="col-lg-2 none-style"></div>
+                    <div class="col-lg float-right">
                         <div style="z-index: 9999;">
                             <button type="button" style="margin-left: 10px" class="btn btn-success btn-sm float-right"
                                 href="#" data-toggle="modal" data-target="#createlead">Add lead <i
