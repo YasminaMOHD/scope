@@ -11,23 +11,24 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
     {{-- <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
 <link rel="icon" href="img/favicon.png" type="image/x-icon"> --}}
-<style>
-    .dataTables_processing {
-        text-align: center;
-    z-index: 999999999999999999999;
-    width: 20%;
-    align-items: center;
-    margin: 0 auto;
-    padding: 20px 0;
+    <style>
+        .dataTables_processing {
+            text-align: center;
+            z-index: 999999999999999999999;
+            width: 20%;
+            align-items: center;
+            margin: 0 auto;
+            padding: 20px 0;
 
-}
-@media (max-width: 1122px) {
-    .none-style{
-        display: none
-}
-}
+        }
 
-</style>
+        @media (max-width: 1122px) {
+            .none-style {
+                display: none
+            }
+        }
+
+    </style>
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -189,39 +190,44 @@
                         <style>
                             @media (min-width: 1120px) {
 
-                            .counter{
-                            position: absolute; right: 200px; top:-5px; width: 100%;
-                            }
+                                .counter {
+                                    position: absolute;
+                                    right: 200px;
+                                    top: -5px;
+                                    width: 100%;
+                                }
 
                             }
+
                             @media (min-width: 1730px) {
 
-                            .counter{
-                            top: 0px;
-                            }
+                                .counter {
+                                    top: 0px;
+                                }
 
                             }
-                            </style>
 
-                            <div class="row counter">
+                        </style>
+
+                        <div class="row counter">
                             <div class="col-sm-4 col-12">
-                             <span style="font-size: 16px; color: black;">Deals Amount: <span style="color: red;">
-                                @php
-                                  $total = App\Models\Lead::sum('amount');
-                                @endphp
-                                {!! $total !!}
-                                </span>
-                             </div>
+                                <span style="font-size: 16px; color: black;">Deals Amount: <span style="color: red;">
+                                        @php
+                                            $total = App\Models\Lead::sum('amount');
+                                        @endphp
+                                        {!! $total !!}
+                                    </span>
+                            </div>
 
                             <div class="col-sm-4 col-12">
-                            <span style="font-size: 16px; color: black;">Total Leads: <span style="color: red;">
-                                @php $count = App\Models\Lead::get()->count(); @endphp {!! $count !!}
-                            </span>
-                             </div>
+                                <span style="font-size: 16px; color: black;">Total Leads: <span style="color: red;">
+                                        @php $count = App\Models\Lead::get()->count(); @endphp {!! $count !!}
+                                    </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
             </div>
 
             <!-- Create lead -->
@@ -424,7 +430,8 @@
                                                                         class="fas fa-fw fa-trash"></i></button>
                                                                 {{-- </form> --}}
                                                                 <button class="select_reminder"
-                                                                    style="border-radius: 50%"><i class="fas fa-clock"></i></button>
+                                                                    style="border-radius: 50%"><i
+                                                                        class="fas fa-clock"></i></button>
                                                                 <div class="change w-75" style="display: none">
                                                                     <span style="color: #fff">Last Reminder :
                                                                         <br>{!! $desc->reminder_at !!}</span>
@@ -456,8 +463,8 @@
 
                                     @foreach ($status as $s)
                                         <div class="radio icheck-primary d-inline">
-                                            <input type="radio"
-                                                id="primary-{!! $lead->id !!}" name="lead_status" @if($s->name == 'Deal') class="deal" @endif
+                                            <input type="radio" id="primary-{!! $lead->id !!}" name="lead_status"
+                                                @if ($s->name == 'Deal') class="deal" @endif
                                                 value="{!! $s->id !!}"
                                                 @if ($lead->status->id == $s->id) checked @endif required="">
                                             <label for="primary-{!! $lead->id !!}">{!! $s->name !!}</label>
@@ -483,21 +490,27 @@
                                         background: lightblue;
                                         color: #000
                                     }
-                                    .select_reminder{
+
+                                    .select_reminder {
                                         background: #00c853;
                                         color: #fff;
                                     }
-
 
                                 </style>
 
                                 <div class="modal-footer">
                                     <div id="amount-24147" class="amount-24147" style="display: none">
-                                        <div id="price-24147">Deal Amount: <input type="number" value="{!!$lead->amount!!}" placeholder="Total Amount"
-                                             name="amount" required="">
-                                            <input type="number" min="1" max="100" value="{!!$lead->percent!!}" placeholder="Percentage" name="percent" required="" style="margin-left: 5px; width: 105px;">%</div></div>
+                                        <div id="price-24147">Deal Amount:<input type="number"
+                                                value="{!! $lead->amount ?? 0.000 !!}" placeholder="Total Amount" name="amount"
+                                                required="">
+                                            <input type="number" min="0" max="100" value="{!! $lead->percent ?? 0.000 !!}"
+                                                placeholder="Percentage" name="percent" required=""
+                                                style="margin-left: 5px; width: 105px;">%
+                                        </div>
+                                    </div>
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                                     <input class="btn btn-success" type="submit" name="add_desc" value="Confirm">
+
                                 </div>
                                 </form>
                             </div>
@@ -523,19 +536,21 @@
                                         <label for="selectpicker3">Select Agent</label>
                                         <select name="agent_id" class="selectpicker w-100" id="selectpicker3" required
                                             data-live-search="true">
-                                            <option  disabled>select Agent</option>
+                                            <option disabled>select Agent</option>
                                             @php
-                                             $agen = App\Models\Agents_lead::get();
-                                                    foreach ($agen as $a) {
-                                                           if (in_array(($lead->id), $a->leads)) {
-                                                               $agent_name = App\Models\Agents::where('id', $a->agent_id)->first();
-                                                               $agent_name = $agent_name ? $agent_name->id : '';
-                                                                break;
-                                                            } else {
-                                                              $agent_name = '';
-                                                          }
-                                                        }
-                                             @endphp
+                                                $agen = App\Models\Agents_lead::get();
+                                                $agent_name = '';
+                                                foreach ($agen as $a) {
+                                                    if (in_array($lead->id, $a->leads)) {
+                                                        $agent_name = App\Models\Agents::where('id', $a->agent_id)->first();
+                                                        $agent_name = $agent_name ? $agent_name->id : '';
+                                                        break;
+                                                    } else {
+                                                        $agent_name = '';
+                                                    }
+                                                }
+                                            @endphp
+
                                             @foreach ($agents as $agent)
                                                 <option value="{!! $agent->id !!}"
                                                     @if ($agent->id == $agent_name) selected @endif>
@@ -771,9 +786,9 @@
                     <style>
                         .dateF {
                             /* position: absolute;
-                                    top: 85px; */
+                                        top: 85px; */
                             /* align-items: center;
-                            text-align: center; */
+                                text-align: center; */
                         }
 
                         .gj-datepicker.gj-datepicker-bootstrap.gj-unselectable.input-group {
@@ -884,9 +899,9 @@
                             </form>
 
                         </div>
-                        <div class="col-md-4 mt-3" >
+                        <div class="col-md-4 mt-3">
                             <form action="{{ route('destroyall') }}" method="GET" style="display: flex">
-                                <input type="text" value="" name="deleteLeads" class="del-all form-control w-50 mr-2"  >
+                                <input type="text" value="" name="deleteLeads" class="del-all form-control w-50 mr-2">
                                 <button class="btn btn-danger">Delete All</button>
                             </form>
                         </div>
@@ -904,38 +919,39 @@
                                             <tr role="row">
                                                 <th style="width: 25px" class="sorting_desc" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="descending"
-                                                    aria-label="#: activate to sort column ascending"># <input type="checkbox" name="check[]" class="checkAll"></th>
+                                                    aria-label="#: activate to sort column ascending"># <input
+                                                        type="checkbox" name="check[]" class="checkAll"></th>
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable"
                                                     rowspan="1" colspan="1"
                                                     aria-label="Lead Name: activate to sort column ascending">Lead Name</th>
-                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Phone: activate to sort column ascending">Phone</th>
-                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Date: activate to sort column ascending">Date</th>
-                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Phone: activate to sort column ascending">Email</th>
 
-                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Source: activate to sort column ascending">Source</th>
                                                 @can('view-agent')
-                                                <th style="width: fit-content" class="sorting" tabindex="0"
-                                                    aria-controls="dataTable" rowspan="1" colspan="1"
-                                                    aria-label="Campaign: activate to sort column ascending">Campaign</th>
-                                                 @endcan
+                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                        aria-controls="dataTable" rowspan="1" colspan="1"
+                                                        aria-label="Campaign: activate to sort column ascending">Campaign</th>
+                                                @endcan
 
 
                                                 <th style="width: fit-content" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Project: activate to sort column ascending">Project</th>
-                                                    @can('view-agent')
-                                                <th style="width: fit-content" class="sorting" tabindex="0"
-                                                    aria-controls="dataTable" rowspan="1" colspan="1"
-                                                    aria-label="Project: activate to sort column ascending">Agent</th>
-                                                    @endcan
+                                                @can('view-agent')
+                                                    <th style="width: fit-content" class="sorting" tabindex="0"
+                                                        aria-controls="dataTable" rowspan="1" colspan="1"
+                                                        aria-label="Project: activate to sort column ascending">Agent</th>
+                                                @endcan
                                                 <th style="width: 25px;" class="sorting" tabindex="0"
                                                     aria-controls="dataTable" rowspan="1" colspan="1"
                                                     aria-label="Status: activate to sort column ascending">Status</th>
@@ -953,103 +969,110 @@
                                                             value="{!! $lead->id !!}"> {!! $loop->iteration !!}
                                                     </td>
                                                     <td>{!! $lead->name !!}</td>
-                                                    <td><a href="tel:{!! $lead->phone !!}">{!! $lead->phone !!}</a></td>
+                                                    <td><a href="tel:{!! $lead->phone !!}">{!! $lead->phone !!}</a>
+                                                    </td>
                                                     <td>{!! $lead->created_at !!}</td>
-                                                </td>
+                                                    </td>
 
-                                                        <td><a href="mailto:{!! $lead->email ?? ' ' !!}"
+                                                    <td><a href="mailto:{!! $lead->email ?? ' ' !!}"
                                                             target="_blank">{!! $lead->email ?? '' !!}</a></td>
 
                                                     <td>{!! $lead->Campagines ? $lead->Campagines->source : 'empty' !!}</td>
                                                     @can('view-agent')
-                                                    <td>{!! $lead->Campagines ? $lead->Campagines->name : 'empty' !!}</td>
+                                                        <td>{!! $lead->Campagines ? $lead->Campagines->name : 'empty' !!}</td>
                                                     @endcan
 
                                                     <td>{!! $lead->project->name ?? '' !!}</td>
                                                     @can('view-agent')
-                                                    @php $agen = App\Models\Agents_lead::get();
-                                                                                                                $agent_name = '';
-                                                                                                                foreach ($agen as $a) {
-                                                                                                                    if (in_array($lead->id, $a->leads)) {
-                                                                                                                        $agent_name = App\Models\Agents::where('id', $a->agent_id)->first();
-                                                                                                                        $agent_name = $agent_name ? $agent_name->fullName : '';
-                                                                                                                        break;
-                                                                                                                    } else {
-                                                                                                                        $agent_name = '';
-                                                                                                                    }
-                                                                                                                }
-                                                                                                        @endphp
-                                                    <td>{!! $agent_name !!}</td>
+                                                        @php
+                                                        $agen = App\Models\Agents_lead::get();
+                                                            $agent_name = '';
+                                                            foreach ($agen as $a) {
+                                                                if (in_array($lead->id, $a->leads)) {
+                                                                    $agent_name = App\Models\Agents::where('id', $a->agent_id)->first();
+                                                                    $agent_name = $agent_name ? $agent_name->fullName : '';
+                                                                    break;
+                                                                } else {
+                                                                    $agent_name = '';
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        <td>{!! $agent_name !!}</td>
                                                     @endcan
                                                     <td>
                                                         <div class="btn @if ($lead->status->name == 'No Answer') btn-primary @elseif($lead->status->name == 'Potential') btn-light
                                                     @elseif($lead->status->name == 'Follow Up') btn-warning @elseif($lead->status->name == 'Undefined') btn-secondary
                                                     @elseif($lead->status->name == 'Unsellable customer') btn-danger
-                                                    @elseif($lead->status->name == 'Deal') btn-info @elseif($lead->status->name == 'Meeting') btn-success @else btn-dark  @endif
+                                                    @elseif($lead->status->name == 'Deal') btn-info @elseif($lead->status->name == 'Meeting') btn-success @else btn-dark @endif
                                                      btn-circle btn-circle-sm m-1"
-                                                            style="width: 120px;">@if($lead->status->name == 'Unsellable customer')junk @else{!! $lead->status->name ?? '' !!} @endif</div>
+                                                            style="width: 120px;">
+                                                            @if ($lead->status->name == 'Unsellable customer')
+                                                                junk @else{!! $lead->status->name ?? '' !!}
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <ul style="
-                                                                 list-style-type: none;
-                                                                 text-align: center;
-                                                                 margin: 0;
-                                                                 padding: 0;
-                                                                 /* display:flex */
-                                                           ">
-                                                           <div class="dispaly-icon" style="display:flex">
-                                                            @can('view-agent')
+                                                                     list-style-type: none;
+                                                                     text-align: center;
+                                                                     margin: 0;
+                                                                     padding: 0;
+                                                                     /* display:flex */
+                                                               ">
+                                                            <div class="dispaly-icon" style="display:flex">
+                                                                @can('view-agent')
+                                                                    <li
+                                                                        style="display: inline-block;margin-right: 10px; margin-bottom: 5px">
+                                                                        <button id="assign" data-role="assign"
+                                                                            data-toggle="modal"
+                                                                            data-target="#assign-{!! $lead->id !!}"
+                                                                            value="{!! $lead->id !!}"
+                                                                            class="btn btn-warning btn-sm">
+                                                                            <i class="fas fa-arrow-right"></i>
+                                                                        </button>
+                                                                    </li>
+                                                                @endcan
                                                                 <li
                                                                     style="display: inline-block;margin-right: 10px; margin-bottom: 5px">
-                                                                    <button id="assign" data-role="assign" data-toggle="modal"
-                                                                        data-target="#assign-{!! $lead->id !!}"
+                                                                    <button id="edit" data-role="edit" data-toggle="modal"
+                                                                        data-target="#editLead-{!! $lead->id !!}"
                                                                         value="{!! $lead->id !!}"
-                                                                        class="btn btn-warning btn-sm">
-                                                                        <i class="fas fa-arrow-right"></i>
+                                                                        class="btn btn-secondary btn-sm">
+                                                                        <i class="fas fa-fw fa-user-edit"></i>
                                                                     </button>
                                                                 </li>
-                                                            @endcan
-                                                            <li
-                                                                style="display: inline-block;margin-right: 10px; margin-bottom: 5px">
-                                                                <button id="edit" data-role="edit" data-toggle="modal"
-                                                                    data-target="#editLead-{!! $lead->id !!}"
-                                                                    value="{!! $lead->id !!}"
-                                                                    class="btn btn-secondary btn-sm">
-                                                                    <i class="fas fa-fw fa-user-edit"></i>
-                                                                </button>
-                                                            </li>
-                                                            <li
-                                                                style="display: inline-block;margin-right: 10px; margin-bottom: 5px">
-                                                                <button style="width: 36px;" id="info" data-role="info"
-                                                                    data-toggle="modal"
-                                                                    data-target="#infoLead-{!! $lead->id !!}"
-                                                                    value="{!! $lead->id !!}"
-                                                                    class="btn btn-info btn-sm">
-                                                                    <i class="fas fa-file-invoice"></i>
-                                                                </button>
-                                                            </li>
+                                                                <li
+                                                                    style="display: inline-block;margin-right: 10px; margin-bottom: 5px">
+                                                                    <button style="width: 36px;" id="info" data-role="info"
+                                                                        data-toggle="modal"
+                                                                        data-target="#infoLead-{!! $lead->id !!}"
+                                                                        value="{!! $lead->id !!}"
+                                                                        class="btn btn-info btn-sm">
+                                                                        <i class="fas fa-file-invoice"></i>
+                                                                    </button>
+                                                                </li>
                                                             </div>
                                                             <div class="dispaly-icon" style="display:flex">
-                                                            <li
-                                                                style="display: inline-block; margin-right: 10px;  margin-bottom: 5px">
-                                                                <button style="width: 36px;;" type="button"
-                                                                    class="btn btn-success btn-sm" href="#"
-                                                                    data-toggle="modal"
-                                                                    data-target="#history-{!! $lead->id !!}"> <i
-                                                                        class="fas fa-history"></i></button>
-                                                            </li>
-                                                            <li
-                                                                style="display: inline-block; margin-right: 10px;  margin-bottom: 5px">
-                                                                <form action="{{ route('lead.destroy', $lead->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button style="width: 36px;" type="submit"
-                                                                        class="btn btn-danger btn-sm"
-                                                                        onclick="return confirm('Are you want to delete lead ?')"><i
-                                                                            class="fas fa-fw fa-user-minus"></i></button>
-                                                                </form>
-                                                            </li>
+                                                                <li
+                                                                    style="display: inline-block; margin-right: 10px;  margin-bottom: 5px">
+                                                                    <button style="width: 36px;;" type="button"
+                                                                        class="btn btn-success btn-sm" href="#"
+                                                                        data-toggle="modal"
+                                                                        data-target="#history-{!! $lead->id !!}"> <i
+                                                                            class="fas fa-history"></i></button>
+                                                                </li>
+                                                                <li
+                                                                    style="display: inline-block; margin-right: 10px;  margin-bottom: 5px">
+                                                                    <form action="{{ route('lead.destroy', $lead->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button style="width: 36px;" type="submit"
+                                                                            class="btn btn-danger btn-sm"
+                                                                            onclick="return confirm('Are you want to delete lead ?')"><i
+                                                                                class="fas fa-fw fa-user-minus"></i></button>
+                                                                    </form>
+                                                                </li>
                                                             </div>
                                                         </ul>
                                                     </td>
@@ -1230,16 +1253,16 @@
 
 @endsection
 @section('script')
-@if(Auth::user()->user_type != 'user')
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-    {{-- <script src="https://cdn.datatables.net/plug-ins/1.12.1/api/processing().js"></script> --}}
+    @if (Auth::user()->user_type != 'user')
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+        {{-- <script src="https://cdn.datatables.net/plug-ins/1.12.1/api/processing().js"></script> --}}
     @endif
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
     <!-- Demo scripts for this page-->
@@ -1248,11 +1271,13 @@
 
 
             var table = $('#dataTable').DataTable({
-                'bPaginate':true,
+                'bPaginate': true,
                 processing: true,
-                      'order': [[ 0, "desc" ]],
+                'order': [
+                    [0, "asc"]
+                ],
                 "pageLength": 20,
-                 "stateSave": true,
+                "stateSave": true,
                 lengthChange: false,
                 buttons: ['copy', 'excel', 'csv', 'pdf', 'colvis'],
                 // Language: {
@@ -1304,17 +1329,17 @@
     <script>
         $(document).on('click', '.deldesc', function(e) {
             e.preventDefault();
-            if(confirm("Are you want to delete description ?") == true){
-            var id = $(this).val();
-            var desc = $(this).parent().parent().parent().parent().parent();
-            var info = '';
-            $.ajax({
-                url: "{{ route('lead.desc.delete') }}",
-                method: 'get',
-                data: {
-                    'id': id,
-                },
-                success: function(data) {
+            if (confirm("Are you want to delete description ?") == true) {
+                var id = $(this).val();
+                var desc = $(this).parent().parent().parent().parent().parent();
+                var info = '';
+                $.ajax({
+                    url: "{{ route('lead.desc.delete') }}",
+                    method: 'get',
+                    data: {
+                        'id': id,
+                    },
+                    success: function(data) {
                         desc.html("");
                         for (var count in data) {
                             //    console.log(data[count]);
@@ -1342,16 +1367,16 @@
                                 data[count].id +
                                 '"><i class="fas fa-fw fa-trash"></i></button>' +
                                 '{{-- </form> --}}' +
-                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>'+
-                            '<div class="change w-75" style="display: none">'+
-                                ' <span style="color: #fff">Last Reminder : '+
-                                    ' <br>'+data[count].reminder_at+'</span> '+
-                                    ' <input type="datetime-local"'+
-                                   ' name="reminder"'+
-                                    'class="reminder">'+
-                                    '<button class="btn btn-primary w-75 mt-1 saveReminder"'+
-                                    ' value="'+data[count].id+'">save time</button>'+
-                             '</div>' +
+                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>' +
+                                '<div class="change w-75" style="display: none">' +
+                                ' <span style="color: #fff">Last Reminder : ' +
+                                ' <br>' + data[count].reminder_at + '</span> ' +
+                                ' <input type="datetime-local"' +
+                                ' name="reminder"' +
+                                'class="reminder">' +
+                                '<button class="btn btn-primary w-75 mt-1 saveReminder"' +
+                                ' value="' + data[count].id + '">save time</button>' +
+                                '</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -1360,11 +1385,11 @@
                         }
                         desc.html(info);
                     },
-                error: function(response) {
-                    alert('error');
-                }
-            });
-        }
+                    error: function(response) {
+                        alert('error');
+                    }
+                });
+            }
         });
     </script>
     <script>
@@ -1417,16 +1442,16 @@
                                 data[count].id +
                                 '"><i class="fas fa-fw fa-trash"></i></button>' +
                                 '{{-- </form> --}}' +
-                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>'+
-                            '<div class="change w-75" style="display: none">'+
-                                ' <span style="color: #fff">Last Reminder : '+
-                                    ' <br>'+data[count].reminder_at+'</span> '+
-                                    ' <input type="datetime-local"'+
-                                   ' name="reminder"'+
-                                    'class="reminder">'+
-                                    '<button class="btn btn-primary w-75 mt-1 saveReminder"'+
-                                    ' value="'+data[count].id+'">save time</button>'+
-                             '</div>' +
+                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>' +
+                                '<div class="change w-75" style="display: none">' +
+                                ' <span style="color: #fff">Last Reminder : ' +
+                                ' <br>' + data[count].reminder_at + '</span> ' +
+                                ' <input type="datetime-local"' +
+                                ' name="reminder"' +
+                                'class="reminder">' +
+                                '<button class="btn btn-primary w-75 mt-1 saveReminder"' +
+                                ' value="' + data[count].id + '">save time</button>' +
+                                '</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -1440,7 +1465,7 @@
                     }
                 });
             });
-            $(document).on('click','.icons .select_reminder',function() {
+            $(document).on('click', '.icons .select_reminder', function() {
                 $(this).parent().find('.change').fadeToggle();
             });
             $(document).on('click', '.saveReminder', function(e) {
@@ -1485,16 +1510,16 @@
                                     count].id +
                                 '"><i class="fas fa-fw fa-trash"></i></button>' +
                                 '{{-- </form> --}}' +
-                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>'+
-                            '<div class="change w-75" style="display: none">'+
-                                ' <span style="color: #fff">Last Reminder : '+
-                                    ' <br>'+data[count].reminder_at+'</span> '+
-                                    ' <input type="datetime-local"'+
-                                   ' name="reminder"'+
-                                    'class="reminder">'+
-                                    '<button class="btn btn-primary w-75 mt-1 saveReminder"'+
-                                    ' value="'+data[count].id+'">save time</button>'+
-                             '</div>' +
+                                '<button class="select_reminder" style="border-radius: 50%"><i class="fas fa-clock"></i></button>' +
+                                '<div class="change w-75" style="display: none">' +
+                                ' <span style="color: #fff">Last Reminder : ' +
+                                ' <br>' + data[count].reminder_at + '</span> ' +
+                                ' <input type="datetime-local"' +
+                                ' name="reminder"' +
+                                'class="reminder">' +
+                                '<button class="btn btn-primary w-75 mt-1 saveReminder"' +
+                                ' value="' + data[count].id + '">save time</button>' +
+                                '</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -1511,67 +1536,67 @@
             });
 
 
-                                                            $(document).on('change','.checkrow',function(e){
-    e.preventDefault()
-    var checked = $(this).is(':checked');
-    if(checked){
-          $(this).prop('selected',true);
-          $('.del-all').val($('.del-all').val()+$(this).val()+',')
-     }else{
-         var p= $('.del-all').val()
-         var pArray=p.split(',')
-         var r=[];
-        //  console.log(pArray)
-         for(var s in pArray){
-             if(pArray[s] != $(this).val()){
-                  r.push(pArray[s])
-             }
-         }
-        var newValue=r.join(',')
-        $('.del-all').val(newValue)
-     }
-    });
-     $(document).on('change','.checkAll',function(e){
-    e.preventDefault()
-    var checked = $(this).is(':checked');
-    var p= $('.del-all').val()
-         var pArray=p.split(',')
-         var r=[];
-    if(checked){
-        $('.checkrow').each(function(){
-        $(this).prop("checked", true);
-        for(var s in pArray){
-             if(pArray[s] != $(this).val()){
-                r.push($(this).val())
-                break
-             }
-         }
-        })
-         var newValue=r.join(',')
-        $('.del-all').val(newValue)
-     }else{
-        $('.checkrow').each(function(){
-        $(this).prop("checked", false);
-         for(var s in pArray){
-            if(pArray[s] == $(this).val()){
-                r.pop($(this).val())
-                // break
-             }
-         }
-         $('.del-all').val(r)
-    })
-     }
-});
+            $(document).on('change', '.checkrow', function(e) {
+                e.preventDefault()
+                var checked = $(this).is(':checked');
+                if (checked) {
+                    $(this).prop('selected', true);
+                    $('.del-all').val($('.del-all').val() + $(this).val() + ',')
+                } else {
+                    var p = $('.del-all').val()
+                    var pArray = p.split(',')
+                    var r = [];
+                    //  console.log(pArray)
+                    for (var s in pArray) {
+                        if (pArray[s] != $(this).val()) {
+                            r.push(pArray[s])
+                        }
+                    }
+                    var newValue = r.join(',')
+                    $('.del-all').val(newValue)
+                }
+            });
+            $(document).on('change', '.checkAll', function(e) {
+                e.preventDefault()
+                var checked = $(this).is(':checked');
+                var p = $('.del-all').val()
+                var pArray = p.split(',')
+                var r = [];
+                if (checked) {
+                    $('.checkrow').each(function() {
+                        $(this).prop("checked", true);
+                        for (var s in pArray) {
+                            if (pArray[s] != $(this).val()) {
+                                r.push($(this).val())
+                                break
+                            }
+                        }
+                    })
+                    var newValue = r.join(',')
+                    $('.del-all').val(newValue)
+                } else {
+                    $('.checkrow').each(function() {
+                        $(this).prop("checked", false);
+                        for (var s in pArray) {
+                            if (pArray[s] == $(this).val()) {
+                                r.pop($(this).val())
+                                // break
+                            }
+                        }
+                        $('.del-all').val(r)
+                    })
+                }
+            });
 
-$('input[type=radio]').on('click',function(){
-    var value = $(this).attr('class');
-    if(value == 'deal'){
-        $('.amount-24147').fadeIn();
-    }else{
-        $('.amount-24147').fadeOut();
-    }
+            $('input[type=radio]').on('click',function(){
+                var value = $(this).attr('class');
+                if(value == 'deal'){
+                    $('.amount-24147').fadeIn();
+                }else{
+                    $('.amount-24147').fadeOut();
+                }
 
-})
+            })
 
 
         });

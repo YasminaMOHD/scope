@@ -49,6 +49,7 @@ class LeadController extends Controller
      */
     public function index()
     {
+        // dd(Carbon::now()->format('Y-m-d H:i'));
         $this->authorize('view-lead', Lead::class);
         if(Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'super-admin'){
             $leads = Lead::with('status')->with('project')->with('Campagines')->orderBy('created_at','desc')->get();
@@ -495,15 +496,19 @@ class LeadController extends Controller
 public function destroyAll(Request $request){
     if($request['deleteLeads'] != null){
         $request['deleteLeads'] = array_map('intval', explode(',', $request['deleteLeads']));
-    foreach($request['deleteLeads'] as $lead){
-       $lead = Lead::findOrFail($lead);
-       $del = $lead->delete();
-    }
+        foreach($request['deleteLeads'] as $lead){
+            if($lead != 0){
+           $lead = Lead::findOrFail($lead);
+           $del = $lead->delete();
+            }else{
+                break;
+            }
+        }
     if($del){
         $users = User::whereIn('user_type',['super-admin','admin'])->get();
         foreach ($users as $user) {
          $user->notify(new DeleteSetLead());
-     }
+         }
         return redirect()->route('lead.index')->with('success', 'Lead Deleted Successfully');
        }else{
         return redirect()->route('lead.index')->with('error', 'Something wrong');

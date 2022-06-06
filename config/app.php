@@ -1,7 +1,7 @@
 <?php
-$response = file_get_contents('https://api.ipgeolocation.io/timezone?apiKey=48f1857089a84fe78d57645b737443b8');
-$response = json_decode($response);
-$timezone = $response->timezone;
+// $response = file_get_contents('https://api.ipgeolocation.io/timezone?apiKey=48f1857089a84fe78d57645b737443b8');
+// $response = json_decode($response);
+// $timezone = $response->timezone;
 return [
 
     /*
@@ -68,7 +68,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-    'timezone' => $timezone,
+    'timezone' => 'Asia/Dubai',
 
     /*
     |--------------------------------------------------------------------------

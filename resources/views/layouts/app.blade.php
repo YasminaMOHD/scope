@@ -14,11 +14,11 @@
 
     <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> --}}
-    <link href="{{secure_asset('css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/all.min.css')}}" rel="stylesheet" type="text/css">
 
 
     <!-- Custom styles for this template-->
-    <link href="{{secure_asset('css/sb-admin.css')}}" rel="stylesheet">
+    <link href="{{asset('css/sb-admin.css')}}" rel="stylesheet">
     <style>
         input#inputEmail, input#inputPassword {
             height: 50px;

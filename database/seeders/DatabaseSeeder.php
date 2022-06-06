@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123$$'),
             'user_type' => 'admin'
         ]);
-        // \App\Models\Status::create([
-        //     'name' => 'Undefined',
-        //     'color' => '#6c757d',
-        //     'icon' => '<i class="fas fa-exclamation-circle"></i>'
-        // ]);
+        \App\Models\Status::create([
+            'name' => 'Undefined',
+            'color' => '#6c757d',
+            'icon' => '<i class="fas fa-exclamation-circle"></i>'
+        ]);
     }
 }
